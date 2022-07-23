@@ -40,7 +40,7 @@ public class DoSIgnIn implements Command {
 			} else {
 				request.getSession(true).setAttribute("user", "not active");
 				request.setAttribute("AuthenticationError", "wrong login or password");
-				request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+				request.getRequestDispatcher("controller?command=go_to_base_page").forward(request, response);
 			}
 			
 		} catch (ServiceException e) {
