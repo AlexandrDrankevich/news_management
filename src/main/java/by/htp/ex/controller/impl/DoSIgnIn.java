@@ -25,10 +25,6 @@ public class DoSIgnIn implements Command {
 		login = request.getParameter(RequestParameterName.LOGIN);
 		password = request.getParameter(RequestParameterName.PASSWORD);
 
-		 if(login==null||password==null){
-			 request.getSession(true).setAttribute("user", "not active");
-			 request.getRequestDispatcher("controller?command=go_to_base_page").forward(request, response);;
-	        }
 
 		try {
 
