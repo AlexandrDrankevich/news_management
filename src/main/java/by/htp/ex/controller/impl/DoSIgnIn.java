@@ -27,7 +27,7 @@ public class DoSIgnIn implements Command {
 
 		 if(login==null||password==null){
 			 request.getSession(true).setAttribute("user", "not active");
-				response.sendRedirect("index.jsp");
+			 request.getRequestDispatcher("controller?command=go_to_base_page").forward(request, response);;
 	        }
 
 		try {
