@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import by.htp.ex.controller.Command;
 import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.RequestParameterName;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
 import by.htp.ex.service.UserService;
@@ -16,18 +17,18 @@ public class DoSIgnIn implements Command {
 
 	private final UserService service = ServiceProvider.getInstance().getUserService();
 
-	private static final String JSP_LOGIN_PARAM = "login";
-	private static final String JSP_PASSWORD_PARAM = "password";
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login;
 		String password;
 
-		login = request.getParameter(JSP_LOGIN_PARAM);
-		password = request.getParameter(JSP_PASSWORD_PARAM);
+		login = request.getParameter(RequestParameterName.LOGIN);
+		password = request.getParameter(RequestParameterName.PASSWORD);
 
-		// small validation
+		 if(login==null||password==null){
+			 request.getSession(true).setAttribute("user", "not active");
+				response.sendRedirect("index.jsp");
+	        }
 
 		try {
 
