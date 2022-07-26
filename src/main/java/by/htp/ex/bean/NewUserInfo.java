@@ -11,6 +11,11 @@ public class NewUserInfo {
     }
 
     public NewUserInfo(String name, String surname, String email, String password, String birthday) {
+        this.name=name;
+        this.surname=surname;
+        this.email=email;
+        this.password=password;
+        this.birthday=birthday;
     }
 
     public String getBirthday() {
@@ -58,7 +63,5 @@ public class NewUserInfo {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }
 
