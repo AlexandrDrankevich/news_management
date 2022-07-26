@@ -19,7 +19,7 @@
 			<div>
 				<label for="email">Email <font color="red"><c:out value="${massage}">
 				</c:out> </font> </label> <input type="text" name="email"
-					id="email" class="form-control" value="" required pattern="[a-z 0-9]+@[a-z]+.[a-z]{2}"/>
+					id="email" class="form-control" value="" required pattern="[a-z 0-9]+@[a-z]+.[a-z]{2,3}"/>
 			</div>
 			<br />
 			<div>
