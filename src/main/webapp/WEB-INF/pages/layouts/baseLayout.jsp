@@ -35,7 +35,7 @@
 			</div>
 
 		<div class="content">
-		<c:if test="${not (requestScope.reg eq 'reg')}">
+		<c:if test="${not (param.reg eq 'reg')}">
 					<c:if test="${not (sessionScope.user eq 'active')}">
 					<c:import url="/WEB-INF/pages/tiles/guestInfo.jsp" />
 				</c:if>
@@ -43,7 +43,7 @@
 					<c:import url="/WEB-INF/pages/tiles/body.jsp" />
 				</c:if>
 				</c:if>
-				<c:if test="${requestScope.reg eq 'reg'}">
+				<c:if test="${param.reg eq 'reg'}">
 				<c:import url="/WEB-INF/pages/tiles/registration.jsp" />
 				</c:if>
 

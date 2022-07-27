@@ -12,10 +12,7 @@ public class GoToRegistrationPageCommand implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("reg", "reg");
-
-		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
-		
-	}
+				response.sendRedirect("controller?command=go_to_base_page&reg=reg");
+			}
 
 }

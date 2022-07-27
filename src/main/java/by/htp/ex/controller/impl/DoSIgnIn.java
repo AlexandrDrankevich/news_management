@@ -24,7 +24,9 @@ public class DoSIgnIn implements Command {
 
 		login = request.getParameter(RequestParameterName.LOGIN);
 		password = request.getParameter(RequestParameterName.PASSWORD);
-
+		 if (login == null || password == null ) {
+			 response.sendRedirect("index.jsp");
+		 }else {
 
 		try {
 
@@ -36,8 +38,7 @@ public class DoSIgnIn implements Command {
 				response.sendRedirect("controller?command=go_to_news_list");
 			} else {
 				request.getSession(true).setAttribute("user", "not active");
-				request.setAttribute("AuthenticationError", "wrong login or password");
-				request.getRequestDispatcher("controller?command=go_to_base_page").forward(request, response);
+				response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=wrong login or password");
 			}
 			
 		} catch (ServiceException e) {
@@ -47,7 +48,7 @@ public class DoSIgnIn implements Command {
 		}
 
 		// response.getWriter().print("do logination");
-
+		 }
 	}
 
 }

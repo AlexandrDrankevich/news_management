@@ -13,26 +13,22 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class GoToBasePage implements Command{
-	
+public class GoToBasePage implements Command {
+
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		List<News> latestNews;
 		try {
 			latestNews = newsService.latestList(5);
 			request.setAttribute("news", latestNews);
-			//request.setAttribute("news", null);
 
 			request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-	}
 
+	}
 }

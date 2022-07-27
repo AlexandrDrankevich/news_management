@@ -15,38 +15,32 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class DoRegistration implements Command {
 
+	UserService service = ServiceProvider.getInstance().getUserService();
 
-		UserService service = ServiceProvider.getInstance().getUserService();
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name = request.getParameter(RequestParameterName.NAME);
+		String surname = request.getParameter(RequestParameterName.SURNAME);
+		String email = request.getParameter(RequestParameterName.EMAIL);
+		String password = request.getParameter(RequestParameterName.PASSWORD);
+		String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
+		if (email == null || password == null || name == null || surname == null || birthday == null) {
+			response.sendRedirect("index.jsp");
+		} else {
+			NewUserInfo user = new NewUserInfo(name, surname, email, password, birthday);
 
-	    @Override
-	    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        String name = request.getParameter(RequestParameterName.NAME);
-	        String surname = request.getParameter(RequestParameterName.SURNAME);
-	        String email = request.getParameter(RequestParameterName.EMAIL);
-	        String password = request.getParameter(RequestParameterName.PASSWORD);
-	        String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
-	        if (email == null || password == null || name == null || surname == null || birthday == null) {
-	            request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
-	        }
-	        NewUserInfo user = new NewUserInfo(name,surname,email,password,birthday);
+			try {
+				boolean result = service.registration(user);
+				if (result) {
+					response.sendRedirect("index.jsp");
+				} else {
 
-	        try {
-	            boolean result = service.registration(user);
-	            if (result) {
-	            	response.sendRedirect("index.jsp");
-	            } else {
-	                request.setAttribute("massage", request.getParameter("email") + " is already exist");
-	                request.setAttribute("reg", "reg");
-	                request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
-	            }
-	        } catch (ServiceException e) {
-	        	request.setAttribute("reg", "reg");
-	            request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
-	        }
-	    }
-
-
-
-
-
+					response.sendRedirect("controller?command=go_to_base_page&massage=" + request.getParameter("email")
+							+ " is already exist&reg=reg");
+				}
+			} catch (ServiceException e) {
+				response.sendRedirect("index.jsp");
+			}
+		}
+	}
 }
