@@ -13,9 +13,9 @@ import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
 
 public class UserDAO implements IUserDAO {
-	int roleId;
+	private int roleId;
 	Connection con;
-	Statement st;
+
 
 	@Override
 	public boolean logination(String login, String password) throws DaoException {
@@ -24,10 +24,12 @@ public class UserDAO implements IUserDAO {
 			con = ConnectionJDBC.getConnection();
 		}
 
-		String sql = "SELECT * FROM users WHERE login='" + login + "'AND password='" + password + "'";
+		String sql = "SELECT * FROM users WHERE login=? AND password=?";
 		try {
-			st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, login);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				roleId = rs.getInt("roles_id");
 				return true;
@@ -44,11 +46,11 @@ public class UserDAO implements IUserDAO {
 	public String getRole(String login, String password) throws DaoException {
 		String sql = "SELECT * FROM roles WHERE id=" + roleId;
 		try {
+			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			if (rs.next()) {
 				return rs.getString("title");
 			}
-
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		}
