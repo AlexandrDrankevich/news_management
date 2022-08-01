@@ -14,7 +14,7 @@ public static Connection getConnection() throws ClassNotFoundException {
 	Connection con = null;
 	
 	try {
-		con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/news-management?useSSL=false&serverTimezone=UTC", "root",
+		con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/news?useSSL=false&serverTimezone=UTC", "root",
 				"drankevich+11");
 		
 	} catch (SQLException e) {
