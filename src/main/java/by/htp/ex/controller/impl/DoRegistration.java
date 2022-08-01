@@ -21,14 +21,14 @@ public class DoRegistration implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter(RequestParameterName.NAME);
 		String surname = request.getParameter(RequestParameterName.SURNAME);
-		String email = request.getParameter(RequestParameterName.EMAIL);
+		String login = request.getParameter(RequestParameterName.LOGIN);
 		String password = request.getParameter(RequestParameterName.PASSWORD);
 		String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
-		if (!checkData(email, password, name, surname, birthday)) {
+		if (!checkData(login, password, name, surname, birthday)) {
 			response.sendRedirect("index.jsp");
 			return;
 		} 
-			NewUserInfo user = new NewUserInfo(name, surname, email, password, birthday);
+			NewUserInfo user = new NewUserInfo(name, surname, login, password, birthday);
 
 			try {
 				boolean result = service.registration(user);
@@ -36,7 +36,7 @@ public class DoRegistration implements Command {
 					response.sendRedirect("index.jsp");
 				} else {
 
-					response.sendRedirect("controller?command=go_to_base_page&massage=" + request.getParameter("email")
+					response.sendRedirect("controller?command=go_to_base_page&massage=" + request.getParameter("login")
 							+ " is already exist&reg=reg");
 				}
 			} catch (ServiceException e) {
@@ -44,8 +44,8 @@ public class DoRegistration implements Command {
 			}
 		}
 	
-	private boolean checkData(String email,String password,String name,String surname, String birthday) {
-		if (email == null || password == null || name == null || surname == null || birthday == null) {
+	private boolean checkData(String login,String password,String name,String surname, String birthday) {
+		if (login == null || password == null || name == null || surname == null || birthday == null) {
 			return false;
 	} return true;
 	}

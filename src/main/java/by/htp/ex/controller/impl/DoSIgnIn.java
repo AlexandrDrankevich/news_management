@@ -24,9 +24,10 @@ public class DoSIgnIn implements Command {
 
 		login = request.getParameter(RequestParameterName.LOGIN);
 		password = request.getParameter(RequestParameterName.PASSWORD);
-		 if (login == null || password == null ) {
-			 response.sendRedirect("index.jsp");
-		 }else {
+		if (!checkData(login, password)) {
+			response.sendRedirect("index.jsp");
+			return;
+		} 
 
 		try {
 
@@ -42,13 +43,16 @@ public class DoSIgnIn implements Command {
 			}
 			
 		} catch (ServiceException e) {
-			// logging e
-			// go-to error page
-
+			response.sendRedirect("index.jsp");
 		}
 
-		// response.getWriter().print("do logination");
-		 }
+		 
+	}
+	
+	private boolean checkData(String login,String password) {
+		if (login == null || password == null ) {
+			return false;
+	} return true;
 	}
 
 }

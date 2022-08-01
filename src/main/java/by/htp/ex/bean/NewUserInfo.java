@@ -3,17 +3,17 @@ package by.htp.ex.bean;
 public class NewUserInfo {
     private String name;
     private String surname;
-    private String email;
+    private String login;
     private String password;
     private String birthday;
 
     public NewUserInfo() {
     }
 
-    public NewUserInfo(String name, String surname, String email, String password, String birthday) {
+    public NewUserInfo(String name, String surname, String login, String password, String birthday) {
         this.name=name;
         this.surname=surname;
-        this.email=email;
+        this.login=login;
         this.password=password;
         this.birthday=birthday;
     }
@@ -32,7 +32,7 @@ public class NewUserInfo {
 
     @Override
     public String toString() {
-        return "User [name=" + name + ", surname=" + surname + ", email=" + email + ", password=" + password
+        return "User [name=" + name + ", surname=" + surname + ", login=" + login + ", password=" + password
                 + ", birthday=" + birthday + "]";
     }
 
@@ -48,12 +48,12 @@ public class NewUserInfo {
         this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {

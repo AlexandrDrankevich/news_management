@@ -20,7 +20,7 @@ public class UserDAO implements IUserDAO{
 		 * 0) { return true; }else { return false; }
 		 */
 		
-		return false;
+		return true;
 		
 	}
 	
