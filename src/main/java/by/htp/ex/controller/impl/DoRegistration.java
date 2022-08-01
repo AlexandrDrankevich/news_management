@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class DoRegistration implements Command {
 
-	UserService service = ServiceProvider.getInstance().getUserService();
+	private final UserService service = ServiceProvider.getInstance().getUserService();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,9 +24,10 @@ public class DoRegistration implements Command {
 		String email = request.getParameter(RequestParameterName.EMAIL);
 		String password = request.getParameter(RequestParameterName.PASSWORD);
 		String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
-		if (email == null || password == null || name == null || surname == null || birthday == null) {
+		if (!checkData(email, password, name, surname, birthday)) {
 			response.sendRedirect("index.jsp");
-		} else {
+			return;
+		} 
 			NewUserInfo user = new NewUserInfo(name, surname, email, password, birthday);
 
 			try {
@@ -42,5 +43,10 @@ public class DoRegistration implements Command {
 				response.sendRedirect("index.jsp");
 			}
 		}
+	
+	private boolean checkData(String email,String password,String name,String surname, String birthday) {
+		if (email == null || password == null || name == null || surname == null || birthday == null) {
+			return false;
+	} return true;
 	}
 }
