@@ -11,8 +11,8 @@ import by.htp.ex.util.validation.ValidationProvider;
 
 public class UserServiceImpl implements UserService{
 
-	IUserDAO userDAO = DaoProvider.getInstance().getUserDao();
-    UserDataValidation userDataValidation=ValidationProvider.getInstance().getUserDataValidation();
+	private final IUserDAO userDAO = DaoProvider.getInstance().getUserDao();
+	private final UserDataValidation userDataValidation=ValidationProvider.getInstance().getUserDataValidation();
 
 	
 	@Override

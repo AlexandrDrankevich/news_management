@@ -9,13 +9,17 @@ import java.sql.Statement;
 
 public class ConnectionJDBC {
 	
-public static Connection getConnection() throws ClassNotFoundException {
-	Class.forName("com.mysql.cj.jdbc.Driver");
+public static Connection getConnection()  {
+	try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+	} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+	}
 	Connection con = null;
 	
 	try {
 		con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/news?useSSL=false&serverTimezone=UTC", "root",
-				"drankevich+11");
+				"12345");
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
