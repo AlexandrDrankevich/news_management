@@ -11,6 +11,8 @@ import by.htp.ex.bean.NewUserInfo;
 import by.htp.ex.connection.ConnectionJDBC;
 import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
+import by.htp.ex.dao.connectionPool.ConnectionPool;
+import by.htp.ex.dao.connectionPool.ConnectionPoolException;
 
 public class UserDAO implements IUserDAO {
 	private int roleId;
@@ -21,7 +23,14 @@ public class UserDAO implements IUserDAO {
 	public boolean logination(String login, String password) throws DaoException {
 
 		if (con == null) {
-			con = ConnectionJDBC.getConnection();
+			con=ConnectionJDBC.getConnection();
+			//try {
+			//	ConnectionPool.getInstance().initPoolData();
+			//	con=ConnectionPool.getInstance().takeConnection();
+		//	} catch (ConnectionPoolException e) {
+		//		e.printStackTrace();
+		//	}
+
 		}
 
 		String sql = "SELECT * FROM users WHERE login=? AND password=?";

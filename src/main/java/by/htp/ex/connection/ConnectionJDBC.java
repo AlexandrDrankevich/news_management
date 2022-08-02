@@ -18,7 +18,7 @@ public class ConnectionJDBC {
 
 		try {
 			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/news?useSSL=false&serverTimezone=UTC", "root",
-					"12345");
+					"drankevic+11");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

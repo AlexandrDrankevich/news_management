@@ -28,6 +28,12 @@ public class ConnectionPool {
         }
     }
 
+    private final static ConnectionPool instance = new ConnectionPool();
+
+    public static ConnectionPool getInstance() {
+        return instance;
+    }
+
     public void initPoolData() throws ConnectionPoolException {
         try {
             Class.forName(driverName);
