@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.Random;
 
 import by.htp.ex.bean.NewUserInfo;
-import by.htp.ex.connection.ConnectionJDBC;
 import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
 import by.htp.ex.dao.connectionPool.ConnectionPool;
@@ -23,13 +22,12 @@ public class UserDAO implements IUserDAO {
 	public boolean logination(String login, String password) throws DaoException {
 
 		if (con == null) {
-			con=ConnectionJDBC.getConnection();
-			//try {
-			//	ConnectionPool.getInstance().initPoolData();
-			//	con=ConnectionPool.getInstance().takeConnection();
-		//	} catch (ConnectionPoolException e) {
-		//		e.printStackTrace();
-		//	}
+				try {
+			ConnectionPool instance=ConnectionPool.getInstance();
+				con=instance.takeConnection();
+			} catch (ConnectionPoolException e) {
+				e.printStackTrace();
+			}
 
 		}
 
@@ -71,10 +69,17 @@ public class UserDAO implements IUserDAO {
 
 		String sql = "INSERT INTO users(login,password,name,surname,birthday) values (?,?,?,?,?)";
 
+	
+		if (con == null) {
+			try {
+		ConnectionPool instance=ConnectionPool.getInstance();
+			con=instance.takeConnection();
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		}
+
+	}
 		try {
-			if (con == null) {
-				con = ConnectionJDBC.getConnection();
-			}
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getPassword());
