@@ -17,6 +17,7 @@ public class FrontController extends HttpServlet {
     public FrontController() {
         super();
     }
+    
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -15,6 +15,7 @@ public class ConnectionPool {
     private String user;
     private String password;
     private int poolSize;
+    private static ConnectionPool instance;
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
@@ -28,9 +29,7 @@ public class ConnectionPool {
             poolSize = 5;
         }
        }
-
-    private static ConnectionPool instance=null;
-
+    
     public static ConnectionPool getInstance() throws ConnectionPoolException {
     	if(instance==null) {
     		instance=new ConnectionPool();
