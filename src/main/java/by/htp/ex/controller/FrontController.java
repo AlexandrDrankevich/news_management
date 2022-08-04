@@ -1,7 +1,10 @@
 package by.htp.ex.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 
+import by.htp.ex.dao.connectionPool.ConnectionPool;
+import by.htp.ex.dao.connectionPool.ConnectionPoolException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	public  static ConnectionPool instance;
 	private final CommandProvider provider = new CommandProvider();
        
 
@@ -18,6 +21,26 @@ public class FrontController extends HttpServlet {
         super();
     }
     
+    
+
+	@Override
+	public void destroy() {
+instance.dispose();
+	super.destroy();
+	}
+
+
+
+	@Override
+	public void init() throws ServletException {
+				super.init();
+		try {
+			instance=ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+					e.printStackTrace();
+		}
+	}
+
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

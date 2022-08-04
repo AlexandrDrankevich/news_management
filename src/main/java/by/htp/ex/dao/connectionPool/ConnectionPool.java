@@ -16,6 +16,7 @@ public class ConnectionPool {
     private String password;
     private int poolSize;
     private static ConnectionPool instance;
+    private static boolean stopQueue=false;
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
@@ -56,6 +57,7 @@ public class ConnectionPool {
     }
 
     public void dispose() {
+    	stopQueue=true;
         clearConnectionQueue();
     }
 
@@ -71,8 +73,10 @@ public class ConnectionPool {
     public Connection takeConnection() throws ConnectionPoolException {
         Connection connection = null;
         try {
+        	if(!stopQueue) {
             connection = connectionQueue.take();
             givenAwayConQueue.add(connection);
+            }
         } catch (InterruptedException e) {
             throw new ConnectionPoolException("Error connecting to data source.", e);
         }

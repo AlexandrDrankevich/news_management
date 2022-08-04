@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Random;
 
 import by.htp.ex.bean.NewUserInfo;
+import by.htp.ex.controller.FrontController;
 import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
 import by.htp.ex.dao.connectionPool.ConnectionPool;
@@ -15,8 +16,8 @@ import by.htp.ex.dao.connectionPool.ConnectionPoolException;
 
 public class UserDAO implements IUserDAO {
 	private int roleId;
-	Connection con;
-
+	private Connection con;
+		
 
 	@Override
 	public boolean logination(String login, String password) throws DaoException {
@@ -24,7 +25,7 @@ public class UserDAO implements IUserDAO {
 		if (con == null) {
 				try {
 			ConnectionPool instance=ConnectionPool.getInstance();
-				con=instance.takeConnection();
+					con=instance.takeConnection();
 			} catch (ConnectionPoolException e) {
 				e.printStackTrace();
 			}
