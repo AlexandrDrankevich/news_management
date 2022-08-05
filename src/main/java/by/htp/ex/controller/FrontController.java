@@ -1,10 +1,9 @@
 package by.htp.ex.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
 
-import by.htp.ex.dao.connectionPool.ConnectionPool;
-import by.htp.ex.dao.connectionPool.ConnectionPoolException;
+import by.htp.ex.dao.connectionpool.ConnectionPool;
+import by.htp.ex.dao.connectionpool.ConnectionPoolException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
