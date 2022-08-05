@@ -17,8 +17,8 @@
 			<div align="right">
 				<form action="controller" method="post">
 					<input type="hidden" name="command" value="do_sign_in" /> 
-					Enter login: <input type="text" name="login" value="" /><br /> 
-					Enter password: <input type="password" name="password" value="" /><br />
+					Enter login: <input type="text" name="login" value="" required pattern="[a-z 0-9]+@[a-z]+.[a-z]{2,3}"/><br /> 
+					Enter password: <input type="password" name="password" value="" required pattern="[A-Z a-z 0-9]+" /><br />
 
 					<c:if test="${not (param.AuthenticationError eq null)}">
 						<font color="red"> 

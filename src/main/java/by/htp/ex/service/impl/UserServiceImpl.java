@@ -17,7 +17,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String signIn(String login, String password) throws ServiceException {
-
+    	 if (!userDataValidation.checkAuthData(login,password)) {
+    		 throw new ServiceException("invalid authoriztion data");
+    	 }
         try {
             if (userDAO.logination(login, password)) {
                 return userDAO.getRole();
