@@ -16,26 +16,26 @@ public class ConnectionPool {
     private String password;
     private int poolSize;
     private static ConnectionPool instance;
-    private static boolean stopQueue=false;
+    private static boolean stopQueue = false;
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
         this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourceManager.getValue(DBParameter.DB_URL);
-        this.user=dbResourceManager.getValue(DBParameter.DB_USER);
+        this.user = dbResourceManager.getValue(DBParameter.DB_USER);
         this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
             poolSize = 5;
         }
-       }
-    
+    }
+
     public static ConnectionPool getInstance() throws ConnectionPoolException {
-    	if(instance==null) {
-    		instance=new ConnectionPool();
-    		instance.initPoolData();
-    	}
+        if (instance == null) {
+            instance = new ConnectionPool();
+            instance.initPoolData();
+        }
         return instance;
     }
 
@@ -45,7 +45,7 @@ public class ConnectionPool {
             givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
             connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
             for (int i = 0; i < poolSize; i++) {
-                Connection connection = DriverManager.getConnection(url, user,password);
+                Connection connection = DriverManager.getConnection(url, user, password);
                 PooledConnection pooledConnection = new PooledConnection(connection);
                 connectionQueue.add(pooledConnection);
             }
@@ -57,7 +57,7 @@ public class ConnectionPool {
     }
 
     public void dispose() {
-    	stopQueue=true;
+        stopQueue = true;
         clearConnectionQueue();
     }
 
@@ -73,9 +73,9 @@ public class ConnectionPool {
     public Connection takeConnection() throws ConnectionPoolException {
         Connection connection = null;
         try {
-        	if(!stopQueue) {
-            connection = connectionQueue.take();
-            givenAwayConQueue.add(connection);
+            if (!stopQueue) {
+                connection = connectionQueue.take();
+                givenAwayConQueue.add(connection);
             }
         } catch (InterruptedException e) {
             throw new ConnectionPoolException("Error connecting to data source.", e);

@@ -11,11 +11,11 @@ public class NewUserInfo {
     }
 
     public NewUserInfo(String name, String surname, String login, String password, String birthday) {
-        this.name=name;
-        this.surname=surname;
-        this.login=login;
-        this.password=password;
-        this.birthday=birthday;
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.birthday = birthday;
     }
 
     public String getBirthday() {
