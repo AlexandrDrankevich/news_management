@@ -16,7 +16,7 @@ public class ConnectionPool {
     private String password;
     private int poolSize;
     private static ConnectionPool instance;
-    private static boolean stopQueue = false;
+    private static volatile boolean stopQueue = false;
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
