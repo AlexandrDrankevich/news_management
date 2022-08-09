@@ -32,7 +32,7 @@ public class DoRegistration implements Command {
         try {
             boolean result = service.registration(user);
             if (result) {
-                response.sendRedirect(JspPageName.INDEX_PAGE);
+                response.sendRedirect("controller?command=go_to_base_page&massage=Successful registration!");
             } else {
                 response.sendRedirect("controller?command=go_to_base_page&massage=" + request.getParameter("login")
                         + " is already exist&reg=reg");

@@ -13,73 +13,89 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class UserDAO implements IUserDAO {
-    private int roleId;
-    private String role;
 
-    @Override
-    public boolean logination(String login, String password) throws DaoException {
-        String sql = "SELECT * FROM users WHERE login=? AND password=?";
-        try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, login);
-            ps.setString(2, password);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    roleId = rs.getInt("roles_id");
-                    setRole(connection, roleId);
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        } catch (ConnectionPoolException e) {
-            throw new DaoException(e);
-        }
-        return false;
-    }
+	String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
 
-    private void setRole(Connection connection, int roleId) throws SQLException {
-        String sql = "SELECT * FROM roles WHERE id=" + roleId;
-        try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery(sql);) {
-            if (rs.next()) {
-                role = rs.getString("title");
-            }
-        }
-    }
+	@Override
+	public boolean logination(String login, String password) throws DaoException {
 
-    public String getRole() {
-        if (role != null) {
-            return role;
-        }
-        return "quest";
-    }
+		try (Connection connection = ConnectionPool.getInstance().takeConnection();
+				PreparedStatement ps = connection.prepareStatement(authorizeDataSelection)) {
+			ps.setString(1, login);
+			ps.setString(2, password);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException(e);
+		}
+		return false;
+	}
 
-    @Override
-    public boolean registration(NewUserInfo user) throws DaoException {
-        String sql = "INSERT INTO users(login,password,registration_date,name,surname,birthday) values (?,?,?,?,?,?)";
-        try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, user.getLogin());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, getDate());
-            ps.setString(4, user.getName());
-            ps.setString(5, user.getSurname());
-            ps.setString(6, user.getBirthday());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            return false;
-        } catch (ConnectionPoolException e) {
-            throw new DaoException(e);
-        }
-        return true;
-    }
+	String userRole = "SELECT roles.title FROM users inner join roles on users.roles_id=roles.id where users.login=? and users.password=?";
 
-    private String getDate() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("GMT+3"));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String date = dateTimeFormatter.format(zonedDateTime);
-        System.out.print(date);
-        return date;
-    }
+	public String getRole(String login, String password) throws DaoException {
+		try (Connection connection = ConnectionPool.getInstance().takeConnection();
+				PreparedStatement ps = connection.prepareStatement(userRole)) {
+			ps.setString(1, login);
+			ps.setString(2, password);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getString("title");
+				}
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException(e);
+		}
+		return "quest";
+	}
+
+	String insertRegistrationData = "INSERT INTO users(login,password,registration_date,name,surname,birthday) values (?,?,?,?,?,?)";
+
+	@Override
+	public boolean registration(NewUserInfo user) throws DaoException {
+		try (Connection connection = ConnectionPool.getInstance().takeConnection();
+				PreparedStatement ps = connection.prepareStatement(insertRegistrationData)) {
+			if (isloginExist(connection, user.getLogin())) {
+				return false;
+			}
+			ps.setString(1, user.getLogin());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, getDate());
+			ps.setString(4, user.getName());
+			ps.setString(5, user.getSurname());
+			ps.setString(6, user.getBirthday());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException(e);
+		}
+		return true;
+	}
+
+	String checkLoginExist = "SELECT login FROM users WHERE login=?";
+
+	private boolean isloginExist(Connection connection, String login) throws SQLException {
+		try (PreparedStatement ps = connection.prepareStatement(checkLoginExist)) {
+			ps.setString(1, login);
+			try (ResultSet rs = ps.executeQuery()) {
+				return rs.next();
+			}
+		}
+	}
+
+	private String getDate() {
+		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("GMT+3"));
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		String date = dateTimeFormatter.format(zonedDateTime);
+		System.out.print(date);
+		return date;
+	}
 }
