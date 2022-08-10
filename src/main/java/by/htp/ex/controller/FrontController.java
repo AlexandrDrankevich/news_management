@@ -22,13 +22,11 @@ public class FrontController extends HttpServlet {
     @Override
     public void destroy() {
         instance.dispose();
-        super.destroy();
-    }
+       }
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        try {
+              try {
             instance = ConnectionPool.getInstance();
         } catch (ConnectionPoolException e) {
             e.printStackTrace();
