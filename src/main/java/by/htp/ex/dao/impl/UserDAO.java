@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 public class UserDAO implements IUserDAO {
 
-	String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
+	private final String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
 
 	@Override
 	public boolean logination(String login, String password) throws DaoException {
@@ -36,7 +36,7 @@ public class UserDAO implements IUserDAO {
 		return false;
 	}
 
-	String userRole = "SELECT roles.title FROM users inner join roles on users.roles_id=roles.id where users.login=? and users.password=?";
+	private final String userRole = "SELECT roles.title FROM users inner join roles on users.roles_id=roles.id where users.login=? and users.password=?";
 
 	public String getRole(String login, String password) throws DaoException {
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
@@ -56,7 +56,7 @@ public class UserDAO implements IUserDAO {
 		return "quest";
 	}
 
-	String insertRegistrationData = "INSERT INTO users(login,password,registration_date,name,surname,birthday) values (?,?,?,?,?,?)";
+	private final String insertRegistrationData = "INSERT INTO users(login,password,registration_date,name,surname,birthday) values (?,?,?,?,?,?)";
 
 	@Override
 	public boolean registration(NewUserInfo user) throws DaoException {
@@ -80,7 +80,7 @@ public class UserDAO implements IUserDAO {
 		return true;
 	}
 
-	String checkLoginExist = "SELECT login FROM users WHERE login=?";
+	private final String checkLoginExist = "SELECT login FROM users WHERE login=?";
 
 	private boolean isloginExist(Connection connection, String login) throws SQLException {
 		try (PreparedStatement ps = connection.prepareStatement(checkLoginExist)) {
