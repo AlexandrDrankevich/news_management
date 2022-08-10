@@ -9,37 +9,41 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-
 public class FrontController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    public static ConnectionPool instance;
-    private final CommandProvider provider = new CommandProvider();
+	private static final long serialVersionUID = 1L;
+	private final CommandProvider provider = new CommandProvider();
 
-    public FrontController() {
-        super();
-    }
+	public FrontController() {
+		super();
+	}
 
-    @Override
-    public void destroy() {
-        instance.dispose();
-       }
+	@Override
+	public void destroy() {
+		try {
+			ConnectionPool.getInstance().dispose();
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void init() throws ServletException {
-              try {
-            instance = ConnectionPool.getInstance();
-        } catch (ConnectionPoolException e) {
-            e.printStackTrace();
-        }
-    }
+	@Override
+	public void init() throws ServletException {
+		try {
+			ConnectionPool.getInstance();
+		} catch (ConnectionPoolException e) {
+			e.printStackTrace();
+		}
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
-        Command command = provider.getCommand(commandName);
-        command.execute(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
+		Command command = provider.getCommand(commandName);
+		command.execute(request, response);
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 }
