@@ -19,7 +19,7 @@
 				<c:if test="${sessionScope.role eq 'admin'}">
 				<li style="padding-left: 15px;">
 				
-				<a href="">add news </a>
+				<a href="controller?command=go_to_add_news_page">add news </a>
                 
                 <br />
 					

@@ -70,7 +70,7 @@ public class ConnectionPool {
 			closeConnectionsQueue(givenAwayConQueue);
 			closeConnectionsQueue(connectionQueue);
 		} catch (SQLException e) {
-			// logger
+			log.error("Connection isn't closed. ");
 		}
 	}
 
@@ -91,12 +91,13 @@ public class ConnectionPool {
 		try {
 			con.close();
 		} catch (SQLException e) {
-			log.error("Connection isn't return to the pool. ");		}
+			log.error("Connection isn't return to the pool. ");
+		}
 		try {
 			rs.close();
 
 		} catch (SQLException e) {
-			log.error ("ResultSet isn't closed.");
+			log.error("ResultSet isn't closed.");
 		}
 		try {
 			st.close();
@@ -109,7 +110,7 @@ public class ConnectionPool {
 		try {
 			con.close();
 		} catch (SQLException e) {
-			log.error("Connection isn't return to the pool. ");	
+			log.error("Connection isn't return to the pool. ");
 		}
 
 		try {

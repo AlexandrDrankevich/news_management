@@ -12,13 +12,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class UserDAO implements IUserDAO {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class UserDAO implements IUserDAO {
+	private static final Logger log = LogManager.getRootLogger();
 	private final String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
 
 	@Override
 	public boolean logination(String login, String password) throws DaoException {
-
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 				PreparedStatement ps = connection.prepareStatement(authorizeDataSelection)) {
 			ps.setString(1, login);

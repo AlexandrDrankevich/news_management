@@ -9,9 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final CommandProvider provider = new CommandProvider();
+	private static final Logger log = LogManager.getRootLogger();
 
 	public FrontController() {
 		super();
@@ -22,6 +26,7 @@ public class FrontController extends HttpServlet {
 		try {
 			ConnectionPool.getInstance().dispose();
 		} catch (ConnectionPoolException e) {
+			log.error(e);
 			e.printStackTrace();
 		}
 	}
@@ -31,19 +36,25 @@ public class FrontController extends HttpServlet {
 		try {
 			ConnectionPool.getInstance();
 		} catch (ConnectionPoolException e) {
+			log.error(e);
 			e.printStackTrace();
 		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
-		Command command = provider.getCommand(commandName);
-		command.execute(request, response);
+		processRequest(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		processRequest(request, response);
+	}
+	
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String commandName = request.getParameter(RequestParameterName.COMMAND_NAME);
+		Command command = provider.getCommand(commandName);
+		command.execute(request, response);
+		
 	}
 }
