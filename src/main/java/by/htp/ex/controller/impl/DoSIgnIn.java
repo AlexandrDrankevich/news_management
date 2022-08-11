@@ -12,9 +12,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DoSIgnIn implements Command {
 
     private final UserService service = ServiceProvider.getInstance().getUserService();
+    private static final Logger log = LogManager.getRootLogger();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,6 +41,7 @@ public class DoSIgnIn implements Command {
                 response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=wrong login or password");
             }
         } catch (ServiceException e) {
+        	log.error(e);
             response.sendRedirect(JspPageName.INDEX_PAGE);
         }
     }

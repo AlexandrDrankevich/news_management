@@ -13,8 +13,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class GoToNewsList implements Command {
     private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
+    private static final Logger log = LogManager.getRootLogger();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,7 +30,8 @@ public class GoToNewsList implements Command {
 
             request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
         } catch (ServiceException e) {
-            e.printStackTrace();
+        	log.error(e);
+        	response.sendRedirect(JspPageName.ERROR_PAGE);
         }
     }
 }
