@@ -5,7 +5,7 @@ import by.htp.ex.bean.News;
 import java.util.List;
 
 public interface NewsService {
-    void save();
+    void save(News news)throws ServiceException;
 
     void find();
 

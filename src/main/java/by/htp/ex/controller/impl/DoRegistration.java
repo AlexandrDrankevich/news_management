@@ -28,7 +28,7 @@ public class DoRegistration implements Command {
 		String login = request.getParameter(RequestParameterName.LOGIN);
 		String password = request.getParameter(RequestParameterName.PASSWORD);
 		String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
-		if (!checkData(login, password, name, surname, birthday)) {
+		if (checkData(login, password, name, surname, birthday)) {
 			response.sendRedirect(JspPageName.INDEX_PAGE);
 			return;
 		}
@@ -36,9 +36,9 @@ public class DoRegistration implements Command {
 		try {
 			boolean result = service.registration(user);
 			if (result) {
-				response.sendRedirect("controller?command=go_to_base_page&massage=Successful registration!");
+				response.sendRedirect("controller?command=go_to_base_page&message=Successful registration!");
 			} else {
-				response.sendRedirect("controller?command=go_to_base_page&massage=" + request.getParameter("login")
+				response.sendRedirect("controller?command=go_to_base_page&message=" + request.getParameter("login")
 						+ " is already exist&reg=reg");
 			}
 		} catch (ServiceException e) {
@@ -48,9 +48,6 @@ public class DoRegistration implements Command {
 	}
 
 	private boolean checkData(String login, String password, String name, String surname, String birthday) {
-		if (login == null || password == null || name == null || surname == null || birthday == null) {
-			return false;
-		}
-		return true;
+		return login == null || password == null || name == null || surname == null || birthday == null ? true : false;
 	}
 }

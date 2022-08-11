@@ -328,8 +328,11 @@ input:invalid{
 	border: 2px solid red;
 }
 
-textarea:required{
+
+
+textarea:invalid{
 	border: 2px solid red;
+	resize: none;
 }
 
 .form-content {

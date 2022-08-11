@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 public class UserDAO implements IUserDAO {
 	private static final Logger log = LogManager.getRootLogger();
-	private final String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
+	private static final String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
 
 	@Override
 	public boolean logination(String login, String password) throws DaoException {
@@ -25,11 +25,11 @@ public class UserDAO implements IUserDAO {
 				PreparedStatement ps = connection.prepareStatement(authorizeDataSelection)) {
 			ps.setString(1, login);
 			ps.setString(2, password);
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return true;
-				}
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return true;
 			}
+
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} catch (ConnectionPoolException e) {
@@ -38,18 +38,18 @@ public class UserDAO implements IUserDAO {
 		return false;
 	}
 
-	private final String userRole = "SELECT roles.title FROM users inner join roles on users.roles_id=roles.id where users.login=? and users.password=?";
+	private static final String userRole = "SELECT roles.title FROM users inner join roles on users.roles_id=roles.id where users.login=? and users.password=?";
 
 	public String getRole(String login, String password) throws DaoException {
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 				PreparedStatement ps = connection.prepareStatement(userRole)) {
 			ps.setString(1, login);
 			ps.setString(2, password);
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return rs.getString("title");
-				}
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getString("title");
 			}
+
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} catch (ConnectionPoolException e) {
@@ -58,7 +58,7 @@ public class UserDAO implements IUserDAO {
 		return "quest";
 	}
 
-	private final String insertRegistrationData = "INSERT INTO users(login,password,registration_date,name,surname,birthday) values (?,?,?,?,?,?)";
+	private static final String insertRegistrationData = "INSERT INTO users(login,password,registration_date,name,surname,birthday) values (?,?,?,?,?,?)";
 
 	@Override
 	public boolean registration(NewUserInfo user) throws DaoException {
@@ -82,14 +82,13 @@ public class UserDAO implements IUserDAO {
 		return true;
 	}
 
-	private final String checkLoginExist = "SELECT login FROM users WHERE login=?";
+	private static final String checkLoginExist = "SELECT login FROM users WHERE login=?";
 
 	private boolean isloginExist(Connection connection, String login) throws SQLException {
 		try (PreparedStatement ps = connection.prepareStatement(checkLoginExist)) {
 			ps.setString(1, login);
-			try (ResultSet rs = ps.executeQuery()) {
-				return rs.next();
-			}
+			ResultSet rs = ps.executeQuery();
+			return rs.next();
 		}
 	}
 

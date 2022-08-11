@@ -27,8 +27,8 @@
 						</font>
 					</c:if>
 
-					<c:if test="${not (param.massage eq null)}">
-						<c:out value="${param.massage}" />
+					<c:if test="${not (param.message eq null)}">
+						<c:out value="${param.message}" />
 					</c:if>
 
 					<a href="controller?command=go_to_registration_page">Registration</a>
@@ -44,6 +44,7 @@
 				<form action="controller" method="post">
 					<input type="hidden" name="command" value="do_sign_out" /> <input
 						type="submit" value="Sign Out" /><br />
+						<c:out value="${param.message}" />
 				</form>
 			</div>
 

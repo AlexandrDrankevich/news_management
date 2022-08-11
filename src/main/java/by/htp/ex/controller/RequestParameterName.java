@@ -10,4 +10,7 @@ public final class RequestParameterName {
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
     public static final String BIRTHDAY = "birthday";
+    public static final String TITLE = "title";
+    public static final String BRIEF_NEWS = "brief";
+    public static final String CONTENT = "content";
 }

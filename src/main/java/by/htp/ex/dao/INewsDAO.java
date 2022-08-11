@@ -12,7 +12,7 @@ public interface INewsDAO {
 
     News fetchById(int id) throws NewsDAOException;
 
-    int addNews(News news) throws NewsDAOException;
+    void addNews(News news) throws NewsDAOException;
 
     void updateNews(News news) throws NewsDAOException;
 
