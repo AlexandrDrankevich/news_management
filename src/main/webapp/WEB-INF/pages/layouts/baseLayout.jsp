@@ -46,7 +46,7 @@
 				<c:if test="${param.reg eq 'reg'}">
 				<c:import url="/WEB-INF/pages/tiles/registration.jsp" />
 				</c:if>
-				<c:if test="${param.addnews eq 'active'}">
+				<c:if test="${addnews eq 'active'}">
 				<c:import url="/WEB-INF/pages/tiles/addNews.jsp" />
 				</c:if>
 

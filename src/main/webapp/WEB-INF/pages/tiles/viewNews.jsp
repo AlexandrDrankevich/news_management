@@ -39,7 +39,7 @@
 <c:if test="${sessionScope.role eq 'admin'&& param.edit eq 'active'}">
 <div class="first-view-button">
 	<form action="controller" method="post">
-		<input type="hidden" name="command" value="do_edit_news" /> <input
+		<input type="hidden" name="command" value="go_to_edit_news" /> <input
 			type="hidden" name="id" value="${news.idNews}" /> <input
 			type="submit" value="Edit" />
 	</form>

@@ -1,7 +1,6 @@
 package by.htp.ex.controller;
 
 import by.htp.ex.controller.impl.*;
-import by.htp.ex.service.DoEditNews;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +19,7 @@ public class CommandProvider {
         commands.put(CommandName.GO_TO_ADD_NEWS_PAGE, new GoToAddNewsPage());
         commands.put(CommandName.DO_ADD_NEWS, new DoAddNews());
         commands.put(CommandName.DO_DELETE_NEWS, new DoDeleteNews());
-        commands.put(CommandName.DO_EDIT_NEWS, new DoEditNews());
+        commands.put(CommandName.GO_TO_EDIT_NEWS, new GoToEditNews());
     }
 
     public Command getCommand(String name) {
