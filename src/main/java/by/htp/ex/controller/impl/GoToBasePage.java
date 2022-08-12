@@ -23,8 +23,9 @@ public class GoToBasePage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<News> latestNews;
+        int countNews=5;
         try {
-            latestNews = newsService.latestList(5);
+            latestNews = newsService.latestList(countNews);
             request.setAttribute("news", latestNews);
             request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
         } catch (ServiceException e) {

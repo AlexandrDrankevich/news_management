@@ -12,9 +12,9 @@ public interface INewsDAO {
 
     News fetchById(int id) throws NewsDAOException;
 
-    void addNews(News news) throws NewsDAOException;
+    void addNews(News news, String login) throws NewsDAOException;
 
     void updateNews(News news) throws NewsDAOException;
 
-    void deleteNewses(String[] idNewses) throws NewsDAOException;
+    void deleteNews(int id) throws NewsDAOException;
 }

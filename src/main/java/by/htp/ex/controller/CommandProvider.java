@@ -18,6 +18,7 @@ public class CommandProvider {
         commands.put(CommandName.GO_TO_VIEW_NEWS, new GoToViewNews());
         commands.put(CommandName.GO_TO_ADD_NEWS_PAGE, new GoToAddNewsPage());
         commands.put(CommandName.DO_ADD_NEWS, new DoAddNews());
+        commands.put(CommandName.DO_DELETE_NEWS, new DoDeleteNews());
     }
 
     public Command getCommand(String name) {

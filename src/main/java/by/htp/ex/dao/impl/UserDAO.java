@@ -5,6 +5,7 @@ import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
 import by.htp.ex.dao.connectionpool.ConnectionPool;
 import by.htp.ex.dao.connectionpool.ConnectionPoolException;
+import by.htp.ex.util.date.Date;
 
 import java.sql.*;
 import java.time.Instant;
@@ -93,10 +94,6 @@ public class UserDAO implements IUserDAO {
 	}
 
 	private String getDate() {
-		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("GMT+3"));
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-		String date = dateTimeFormatter.format(zonedDateTime);
-		System.out.print(date);
-		return date;
+		return Date.getDate();
 	}
 }

@@ -2,7 +2,7 @@
 
 
 <div class="body-title">
-	<a href="">News >> </a> News List
+	<a href="" >News >> </a> News List
 </div>
 
 <form action="" method="post">
@@ -22,7 +22,7 @@
 				<div class="news-link-to-wrapper">
 					<div class="link-position">
 						<c:if test="${sessionScope.role eq 'admin'}">
-						      <a href="">editlink </a> 
+						      <a href="controller?command=go_to_view_news&id=${news.idNews}&edit=active">editlink </a> 
 						</c:if>
 						
 						<a href="controller?command=go_to_view_news&id=${news.idNews}">viewlink </a> 
@@ -32,9 +32,6 @@
    					    </c:if>
 					</div>
 				</div>
-
-
-
 			</div>
 		</div>
 

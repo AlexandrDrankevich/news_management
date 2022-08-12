@@ -29,7 +29,7 @@ public class NewsServiceImpl implements NewsService {
 	public List<News> latestList(int count) throws ServiceException {
 
 		try {
-			return newsDAO.getLatestsList(5);
+			return newsDAO.getLatestsList(count);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
@@ -54,12 +54,22 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public void save(News news) throws ServiceException {
+	public void save(News news, String login) throws ServiceException {
 		try {
-			newsDAO.addNews(news);
+			newsDAO.addNews(news, login);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
+	}
+
+	@Override
+	public void delete(int id) throws ServiceException {
+		try {
+			newsDAO.deleteNews(id);
+		} catch (NewsDAOException e) {
+			throw new ServiceException(e);
+		}
+		
 	}
 
 }

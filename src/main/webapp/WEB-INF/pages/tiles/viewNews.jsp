@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="body-title">
-	<a href="">News >> </a> View News
+	<a href="controller?command=go_to_news_list">News >> </a> View News
 </div>
 
 <div class="add-table-margin">
@@ -36,10 +36,10 @@
 </div>
 
 
-<c:if test="${sessionScope.role eq 'admin'}">
+<c:if test="${sessionScope.role eq 'admin'&& param.edit eq 'active'}">
 <div class="first-view-button">
 	<form action="controller" method="post">
-		<input type="hidden" name="command" value="edit" /> <input
+		<input type="hidden" name="command" value="do_edit_news" /> <input
 			type="hidden" name="id" value="${news.idNews}" /> <input
 			type="submit" value="Edit" />
 	</form>
@@ -47,7 +47,7 @@
 
 <div class="second-view-button">
 	<form action="controller" method="post">
-		<input type="hidden" name="command" value="delete" /> <input
+		<input type="hidden" name="command" value="do_delete_news" /> <input
 			type="hidden" name="id" value="${news.idNews}" /> <input
 			type="submit" value="Delete" />
 	</form>
