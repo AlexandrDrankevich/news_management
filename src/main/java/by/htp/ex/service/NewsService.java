@@ -9,7 +9,7 @@ public interface NewsService {
 
 	void find();
 
-	void update();
+	void update(News news, String login) throws ServiceException;
 
 	void delete(int id) throws ServiceException;
 

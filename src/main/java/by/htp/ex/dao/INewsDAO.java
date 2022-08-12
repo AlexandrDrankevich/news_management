@@ -14,7 +14,7 @@ public interface INewsDAO {
 
     void addNews(News news, String login) throws NewsDAOException;
 
-    void updateNews(News news) throws NewsDAOException;
+    void updateNews(News news, String login) throws NewsDAOException;
 
     void deleteNews(int id) throws NewsDAOException;
 }

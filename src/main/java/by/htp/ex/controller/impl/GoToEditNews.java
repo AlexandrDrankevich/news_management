@@ -27,7 +27,7 @@ public class GoToEditNews implements Command {
 		try {
 			news = newsService.findById(Integer.parseInt(id));
 			request.setAttribute("news", news);
-			request.setAttribute("addnews", "active");
+			request.setAttribute("editnews", "active");
 		    request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
 				} catch ( ServiceException e) {
 					log.error(e);

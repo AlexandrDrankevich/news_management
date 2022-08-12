@@ -20,6 +20,7 @@ public class CommandProvider {
         commands.put(CommandName.DO_ADD_NEWS, new DoAddNews());
         commands.put(CommandName.DO_DELETE_NEWS, new DoDeleteNews());
         commands.put(CommandName.GO_TO_EDIT_NEWS, new GoToEditNews());
+        commands.put(CommandName.DO_EDIT_NEWS, new DoEditNews());
     }
 
     public Command getCommand(String name) {

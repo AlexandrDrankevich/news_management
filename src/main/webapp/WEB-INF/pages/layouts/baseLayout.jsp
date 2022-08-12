@@ -49,6 +49,9 @@
 				<c:if test="${addnews eq 'active'}">
 				<c:import url="/WEB-INF/pages/tiles/addNews.jsp" />
 				</c:if>
+				<c:if test="${editnews eq 'active'}">
+				<c:import url="/WEB-INF/pages/tiles/editNews.jsp" />
+				</c:if>
 
 
 			</div>

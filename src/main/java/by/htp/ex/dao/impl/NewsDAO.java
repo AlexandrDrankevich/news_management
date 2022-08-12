@@ -78,7 +78,7 @@ public class NewsDAO implements INewsDAO {
 		}
 	}
 
-	private static final String addNews = "INSERT INTO news(title,brief,content,date,reporter_id) values(?,?,?,?,?)";
+	private static final String addNews = "INSERT INTO news(title, brief,content,date,reporter_id) values(?,?,?,?,?)";
 
 	@Override
 	public void addNews(News news, String login) throws NewsDAOException {
@@ -112,11 +112,26 @@ public class NewsDAO implements INewsDAO {
 			return rs.getInt(1);
 		}
 	}
+	
+	private static final String updateNews="UPDATE news SET title=?, brief=?,content=?,date=?,reporter_id=?";
 
 	@Override
-	public void updateNews(News news) throws NewsDAOException {
-		// TODO Auto-generated method stub
-
+	public void updateNews(News news, String login) throws NewsDAOException {
+		try (Connection connection = ConnectionPool.getInstance().takeConnection();
+				PreparedStatement ps = connection.prepareStatement(updateNews)) {
+			int userId = getUserId(connection, login);
+			ps.setString(1, news.getTitle());
+			ps.setString(2, news.getBriefNews());
+			ps.setString(3, news.getContent());
+			ps.setString(4, getDate());
+			ps.setInt(5, userId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new NewsDAOException(e);
+		} catch (ConnectionPoolException e) {
+			throw new NewsDAOException(e);
+		}
+		
 	}
 
 	public static final String deleteNewsById = "DELETE  FROM news where id=?;";

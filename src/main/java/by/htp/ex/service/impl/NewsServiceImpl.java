@@ -19,12 +19,7 @@ public class NewsServiceImpl implements NewsService {
 
 	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override
 	public List<News> latestList(int count) throws ServiceException {
 
@@ -69,6 +64,17 @@ public class NewsServiceImpl implements NewsService {
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
+		
+	}
+
+	@Override
+	public void update(News news, String login) throws ServiceException {
+		try {
+			newsDAO.updateNews(news, login);;
+		} catch (NewsDAOException e) {
+			throw new ServiceException(e);
+		}
+		
 		
 	}
 
