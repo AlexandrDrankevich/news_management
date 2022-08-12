@@ -32,7 +32,7 @@ public class DoEditNews implements Command {
 			response.sendRedirect(JspPageName.INDEX_PAGE);
 			return;
 		}
-		News news = new News(title, briefNews, content);
+		News news = new News(Integer.parseInt(id),title, briefNews, content);
 		try {
 			newsService.update(news, login);
 			response.sendRedirect("controller?command=go_to_news_list&message=News updated!");

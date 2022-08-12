@@ -113,7 +113,7 @@ public class NewsDAO implements INewsDAO {
 		}
 	}
 	
-	private static final String updateNews="UPDATE news SET title=?, brief=?,content=?,date=?,reporter_id=?";
+	private static final String updateNews="UPDATE news SET title=?, brief=?,content=?,date=?,reporter_id=? WHERE id=?";
 
 	@Override
 	public void updateNews(News news, String login) throws NewsDAOException {
@@ -125,6 +125,8 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(3, news.getContent());
 			ps.setString(4, getDate());
 			ps.setInt(5, userId);
+			ps.setInt(6,news.getIdNews());
+			
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);

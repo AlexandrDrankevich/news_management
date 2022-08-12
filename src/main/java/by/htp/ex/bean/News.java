@@ -6,7 +6,7 @@ public class News implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer idNews;
+    private int idNews;
     private String title ;
     private String briefNews;
     private String content;
@@ -23,6 +23,14 @@ public class News implements Serializable {
         this.content = content;
         this.newsDate = newsDate;
     }
+    public News(int idNews, String title, String briefNews, String content ) {
+        super();
+        this.idNews = idNews;
+        this.title = title;
+        this.briefNews = briefNews;
+        this.content = content;
+         }
+    
     public News(String title, String briefNews, String content) {
     	 this.title = title;
          this.briefNews = briefNews;
