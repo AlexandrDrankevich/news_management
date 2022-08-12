@@ -20,10 +20,16 @@ public class DoEditNews implements Command{
 		 News news;
 	        String id;
 	        id = request.getParameter("id");
-	        try {
-	            news = newsService.findById(Integer.parseInt(id));
+	       
+	            try {
+					news = newsService.findById(Integer.parseInt(id));
+				
 	            request.setAttribute("news", news);
 		response.sendRedirect("controller?command=go_to_news_list&message=Edit saved!");
+	            } catch (NumberFormatException | ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	}
 
 }
