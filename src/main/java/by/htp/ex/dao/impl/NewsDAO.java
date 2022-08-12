@@ -119,7 +119,7 @@ public class NewsDAO implements INewsDAO {
 
 	}
 
-	public static final String deleteNewsById = "DELETE  FROM news where id=10;";
+	public static final String deleteNewsById = "DELETE  FROM news where id=?;";
 
 	@Override
 	public void deleteNews(int id) throws NewsDAOException {
@@ -127,7 +127,6 @@ public class NewsDAO implements INewsDAO {
 				PreparedStatement ps = connection.prepareStatement(deleteNewsById)) {
 			ps.setInt(1, id);
 			ps.executeUpdate();
-			System.out.println("hdfdsfdsfdsf");
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
