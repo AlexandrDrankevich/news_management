@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UserDAO implements IUserDAO {
-	private static final Logger log = LogManager.getRootLogger();
+	
 	private static final String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
 
 	@Override
