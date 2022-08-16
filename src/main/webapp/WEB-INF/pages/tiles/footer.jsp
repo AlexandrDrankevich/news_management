@@ -1,3 +1,3 @@
 
-<center>footer
+<center>All rights reserved
 </center>

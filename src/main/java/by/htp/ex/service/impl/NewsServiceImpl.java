@@ -13,13 +13,7 @@ public class NewsServiceImpl implements NewsService {
 
 	private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 
-	@Override
-	public void find() {
-		// TODO Auto-generated method stub
-
-	}
-
-	
+		
 	@Override
 	public List<News> latestList(int count) throws ServiceException {
 

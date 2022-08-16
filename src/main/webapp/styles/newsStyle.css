@@ -100,6 +100,9 @@ html,body {
 	padding-bottom: 20px;
 	padding-left: 10px;
 }
+.formfield * {
+  vertical-align: middle;
+}
 
 .list-menu-invisible-wrapper {
 	padding-bottom: 5px;
@@ -336,8 +339,8 @@ textarea:invalid{
 }
 
 .form-content {
-	width: 90%;
-	height: 100px;
+	width: 70%;
+	height: 200px;
 	padding: 5px 10px;
 	line-height: 35px;
 	border: 1px solid black;
@@ -345,7 +348,7 @@ textarea:invalid{
 }
 
 .form-addnews {
-	width: 50%;
+	width: 70%;
 	padding: 5px 10px;
 	line-height: 35px;
 	border: 1px solid black;

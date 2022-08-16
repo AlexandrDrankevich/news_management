@@ -83,7 +83,7 @@ public class NewsDAO implements INewsDAO {
 	@Override
 	public void addNews(News news, String login) throws NewsDAOException {
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
-				PreparedStatement ps = connection.prepareStatement(addNews)) {
+				PreparedStatement ps = connection.prepareStatement(addNews, Statement.RETURN_GENERATED_KEYS)) {
 			int userId = getUserId(connection, login);
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getBriefNews());
@@ -91,13 +91,17 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(4, getDate());
 			ps.setInt(5, userId);
 			ps.executeUpdate();
+			ResultSet rs=ps.getGeneratedKeys();
+			rs.next();
+			int idNews=rs.getInt(1);
+			news.setIdNews(idNews);
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
 			throw new NewsDAOException(e);
 		}
 	}
-
+	
 	private String getDate() {
 		return Date.getDate();
 	}

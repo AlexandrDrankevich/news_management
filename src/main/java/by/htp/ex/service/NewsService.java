@@ -7,8 +7,6 @@ import java.util.List;
 public interface NewsService {
 	void save(News news, String login) throws ServiceException;
 
-	void find();
-
 	void update(News news, String login) throws ServiceException;
 
 	void delete(int id) throws ServiceException;

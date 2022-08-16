@@ -22,10 +22,10 @@
 				<div class="news-link-to-wrapper">
 					<div class="link-position">
 						<c:if test="${sessionScope.role eq 'admin'}">
-						      <a href="controller?command=go_to_view_news&id=${news.idNews}&edit=active">edit &nbsp </a> 
+						      <a href="controller?command=go_to_edit_news&id=${news.idNews}">edit &nbsp </a> 
 						</c:if>
 						
-						<a href="controller?command=go_to_view_news&id=${news.idNews}">view </a> 
+						<a href="controller?command=go_to_view_news&id=${news.idNews}&editView=active">view </a> 
    					    
    					    <c:if test="${sessionScope.role eq 'admin'}">
    					         <input type="checkbox" name="idNews" value="${news.idNews }" />
@@ -36,14 +36,6 @@
 		</div>
 
 	</c:forEach>
-
-	<!-- 	<logic:notEmpty name="newsForm" property="newsList">
-		<div class="delete-button-position">
-			<html:submit>
-				<bean:message key="locale.newslink.deletebutton" />
-			</html:submit>
-		</div>
-	</logic:notEmpty> -->
 
 	<div class="no-news">
 		<c:if test="${requestScope.news eq null}">

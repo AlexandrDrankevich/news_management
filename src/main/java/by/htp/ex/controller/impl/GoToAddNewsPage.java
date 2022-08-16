@@ -12,9 +12,8 @@ public class GoToAddNewsPage implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 request.setAttribute("addnews", "active");
+		request.setAttribute("addnews", "active");
 		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
-		//response.sendRedirect("controller?command=go_to_base_page&addnews=active");
-		}
+	}
 
 }

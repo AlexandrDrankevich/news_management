@@ -27,30 +27,29 @@
 
 				<c:if test="${not (sessionScope.user eq 'active')}">
 				    Welcome!!!!!
-					<%-- <c:import url=""></c:import> --%>
-				</c:if>
+								</c:if>
 				<c:if test="${sessionScope.user eq 'active'}">
 					<c:import url="/WEB-INF/pages/tiles/menu.jsp" />
 				</c:if>
 			</div>
 
-		<div class="content">
-		<c:if test="${not (param.reg eq 'reg')}">
+			<div class="content">
+				<c:if test="${not (param.reg eq 'reg')}">
 					<c:if test="${not (sessionScope.user eq 'active')}">
-					<c:import url="/WEB-INF/pages/tiles/guestInfo.jsp" />
-				</c:if>
-				<c:if test="${sessionScope.user eq 'active'}">
-					<c:import url="/WEB-INF/pages/tiles/body.jsp" />
-				</c:if>
+						<c:import url="/WEB-INF/pages/tiles/guestInfo.jsp" />
+					</c:if>
+					<c:if test="${sessionScope.user eq 'active'}">
+						<c:import url="/WEB-INF/pages/tiles/body.jsp" />
+					</c:if>
 				</c:if>
 				<c:if test="${param.reg eq 'reg'}">
-				<c:import url="/WEB-INF/pages/tiles/registration.jsp" />
+					<c:import url="/WEB-INF/pages/tiles/registration.jsp" />
 				</c:if>
 				<c:if test="${addnews eq 'active'}">
-				<c:import url="/WEB-INF/pages/tiles/addNews.jsp" />
+					<c:import url="/WEB-INF/pages/tiles/addNews.jsp" />
 				</c:if>
 				<c:if test="${editnews eq 'active'}">
-				<c:import url="/WEB-INF/pages/tiles/editNews.jsp" />
+					<c:import url="/WEB-INF/pages/tiles/editNews.jsp" />
 				</c:if>
 
 

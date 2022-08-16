@@ -27,7 +27,7 @@
 		<br />
 		<div>
 			<label for="birthday">Birthday</label> <input type="date"
-				name="birthday" id="birthday" class="form-control" value="" required />
+				name="birthday" id="birthday" class="form-control" min="1900-01-01" max="2030-01-01" required />
 		</div>
 		<br />
 		<div>

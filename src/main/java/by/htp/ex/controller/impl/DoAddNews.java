@@ -33,7 +33,7 @@ public class DoAddNews implements Command {
 		News news = new News(title, briefNews, content);
 		try {
 			newsService.save(news, login);
-			response.sendRedirect("controller?command=go_to_news_list&message=News saved!");
+			response.sendRedirect("controller?command=go_to_view_news&id="+news.getIdNews()+"&message=News saved!");
 
 		} catch (ServiceException e) {
 			log.error(e);
