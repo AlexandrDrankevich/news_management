@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class DoEditNews implements Command {
 
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-	private static final Logger log = LogManager.getRootLogger();
+	private static final Logger log = LogManager.getLogger(NewsService.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

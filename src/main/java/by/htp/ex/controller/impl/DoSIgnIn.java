@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 public class DoSIgnIn implements Command {
 
 	private final UserService service = ServiceProvider.getInstance().getUserService();
-	private static final Logger log = LogManager.getRootLogger();
+	private static final Logger log = LogManager.getLogger(DoSIgnIn.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

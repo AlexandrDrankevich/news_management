@@ -13,10 +13,8 @@ public class NewsServiceImpl implements NewsService {
 
 	private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 
-		
 	@Override
 	public List<News> latestList(int count) throws ServiceException {
-
 		try {
 			return newsDAO.getLatestsList(count);
 		} catch (NewsDAOException e) {
@@ -58,18 +56,15 @@ public class NewsServiceImpl implements NewsService {
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
-		
 	}
 
 	@Override
 	public void update(News news, String login) throws ServiceException {
 		try {
-			newsDAO.updateNews(news, login);;
+			newsDAO.updateNews(news, login);
+			;
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
-		
-		
 	}
-
 }

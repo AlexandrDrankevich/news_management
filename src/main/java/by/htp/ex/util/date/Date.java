@@ -11,7 +11,7 @@ public final class Date {
 
 	public static String getDate() {
 		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(Instant.now(), ZoneId.of("GMT+3"));
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String date = dateTimeFormatter.format(zonedDateTime);
 		return date;
 	}

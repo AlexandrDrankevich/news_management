@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 public class GoToNewsList implements Command {
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-	private static final Logger log = LogManager.getRootLogger();
+	private static final Logger log = LogManager.getLogger(GoToNewsList.class);
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
