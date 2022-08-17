@@ -42,7 +42,7 @@
         No news.
 	</c:if>
 	</div>
-	<c:if test="${sessionScope.role eq 'admin'}">
+	<c:if test="${(sessionScope.role eq 'admin')&&not(requestScope.news eq null)}">
 	<div align="right">
 	<input type="hidden" name="command" value="do_delete_news" /> 
 	<input type="submit" value="Delete" />
