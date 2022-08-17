@@ -28,24 +28,16 @@ public class DoEditNews implements Command {
 		String content = request.getParameter(RequestParameterName.CONTENT);
 		String login = (String) request.getSession().getAttribute(RequestParameterName.LOGIN);
 		String id = request.getParameter(RequestParameterName.ID);
-		if (checkDataNews(id, title, briefNews, content)) {
-			response.sendRedirect(JspPageName.INDEX_PAGE);
-			return;
-		}
-		News news = new News(Integer.parseInt(id), title, briefNews, content);
+		String newsDate = request.getParameter(RequestParameterName.DATE);
+
+		News news = new News(Integer.parseInt(id), title, briefNews, content, newsDate);
 		try {
 			newsService.update(news, login);
-			response.sendRedirect("controller?command=go_to_view_news&id="+id+"&message=News updated!");
+			response.sendRedirect("controller?command=go_to_view_news&id=" + id + "&message=News updated!");
 
 		} catch (ServiceException e) {
 			log.error(e);
 			response.sendRedirect(JspPageName.ERROR_PAGE);
 		}
-
-	}
-
-	private boolean checkDataNews(String id, String title, String briefNews, String content) {
-		return title == null || briefNews == null || content == null || id == null ? true : false;
-
 	}
 }

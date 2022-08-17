@@ -34,5 +34,4 @@ public class GoToEditNews implements Command {
 					response.sendRedirect(JspPageName.ERROR_PAGE);
 		}
 	}
-
 }

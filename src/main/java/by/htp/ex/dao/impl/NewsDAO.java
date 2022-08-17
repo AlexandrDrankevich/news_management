@@ -1,14 +1,11 @@
 package by.htp.ex.dao.impl;
 
 import by.htp.ex.bean.News;
-import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.INewsDAO;
 import by.htp.ex.dao.NewsDAOException;
 import by.htp.ex.dao.connectionpool.ConnectionPool;
 import by.htp.ex.dao.connectionpool.ConnectionPoolException;
-import by.htp.ex.util.date.Date;
 
-import java.awt.event.MouseWheelListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +16,7 @@ import java.util.List;
 
 public class NewsDAO implements INewsDAO {
 
-	public static final String latestNews = "SELECT * FROM news order by id DESC limit ?";
+	public static final String latestNews = "SELECT * FROM news order by date DESC limit ?";
 
 	@Override
 	public List<News> getLatestsList(int count) throws NewsDAOException {
@@ -40,7 +37,7 @@ public class NewsDAO implements INewsDAO {
 		return result;
 	}
 
-	public static final String allNews = "SELECT * FROM news order by id DESC";
+	public static final String allNews = "SELECT * FROM news order by date DESC";
 
 	@Override
 	public List<News> getList() throws NewsDAOException {
@@ -88,22 +85,18 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getBriefNews());
 			ps.setString(3, news.getContent());
-			ps.setString(4, getDate());
+			ps.setString(4, news.getNewsDate());
 			ps.setInt(5, userId);
 			ps.executeUpdate();
-			ResultSet rs=ps.getGeneratedKeys();
+			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
-			int idNews=rs.getInt(1);
+			int idNews = rs.getInt(1);
 			news.setIdNews(idNews);
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
 			throw new NewsDAOException(e);
 		}
-	}
-	
-	private String getDate() {
-		return Date.getDate();
 	}
 
 	private static final String getrUserId = "SELECT id FROM users WHERE login=?";
@@ -116,8 +109,8 @@ public class NewsDAO implements INewsDAO {
 			return rs.getInt(1);
 		}
 	}
-	
-	private static final String updateNews="UPDATE news SET title=?, brief=?,content=?,date=?,reporter_id=? WHERE id=?";
+
+	private static final String updateNews = "UPDATE news SET title=?, brief=?,content=?,date=?,reporter_id=? WHERE id=?";
 
 	@Override
 	public void updateNews(News news, String login) throws NewsDAOException {
@@ -127,27 +120,29 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getBriefNews());
 			ps.setString(3, news.getContent());
-			ps.setString(4, getDate());
+			ps.setString(4, news.getNewsDate());
 			ps.setInt(5, userId);
-			ps.setInt(6,news.getIdNews());
-			
+			ps.setInt(6, news.getIdNews());
+
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
 			throw new NewsDAOException(e);
 		}
-		
+
 	}
 
 	public static final String deleteNewsById = "DELETE  FROM news where id=?;";
 
 	@Override
-	public void deleteNews(int id) throws NewsDAOException {
+	public void deleteNews(String[] idNews) throws NewsDAOException {
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 				PreparedStatement ps = connection.prepareStatement(deleteNewsById)) {
-			ps.setInt(1, id);
-			ps.executeUpdate();
+			for (String id : idNews) {
+				ps.setInt(1, Integer.parseInt(id));
+				ps.executeUpdate();
+			}
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {

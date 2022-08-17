@@ -9,7 +9,7 @@ public interface NewsService {
 
 	void update(News news, String login) throws ServiceException;
 
-	void delete(int id) throws ServiceException;
+	void delete(String[] idNews) throws ServiceException;
 
 	List<News> latestList(int count) throws ServiceException;
 

@@ -52,9 +52,9 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public void delete(int id) throws ServiceException {
+	public void delete(String[] idNews) throws ServiceException {
 		try {
-			newsDAO.deleteNews(id);
+			newsDAO.deleteNews(idNews);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}

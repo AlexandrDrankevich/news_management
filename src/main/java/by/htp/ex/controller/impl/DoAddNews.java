@@ -25,15 +25,13 @@ public class DoAddNews implements Command {
 		String title = request.getParameter(RequestParameterName.TITLE);
 		String briefNews = request.getParameter(RequestParameterName.BRIEF_NEWS);
 		String content = request.getParameter(RequestParameterName.CONTENT);
-		String login=(String) request.getSession().getAttribute(RequestParameterName.LOGIN);
-		if (checkDataNews(title, briefNews, content)) {
-			response.sendRedirect(JspPageName.INDEX_PAGE);
-			return;
-		}
-		News news = new News(title, briefNews, content);
+		String login = (String) request.getSession().getAttribute(RequestParameterName.LOGIN);
+		String newsDate = request.getParameter(RequestParameterName.DATE);
+
+		News news = new News(title, briefNews, content, newsDate);
 		try {
 			newsService.save(news, login);
-			response.sendRedirect("controller?command=go_to_view_news&id="+news.getIdNews()+"&message=News saved!");
+			response.sendRedirect("controller?command=go_to_view_news&id=" + news.getIdNews() + "&message=News saved!");
 
 		} catch (ServiceException e) {
 			log.error(e);
@@ -42,8 +40,4 @@ public class DoAddNews implements Command {
 
 	}
 
-	private boolean checkDataNews(String title, String briefNews, String content) {
-		return title == null || briefNews == null || content == null ? true : false;
-
-	}
 }

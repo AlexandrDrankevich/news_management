@@ -15,7 +15,7 @@
 		<br />
 		<div>
 			<label for=date>Date &nbsp</label> <input type="date" name="date"
-				id="date" class="form-addnews" min="2022-01-01" max="2030-01-01" required />
+				id="date" class="form-addnews" value="${news.newsDate}" min="2022-01-01" max="2030-01-01" required />
 		</div>
 		<br /> 
 			<p class="formfield">

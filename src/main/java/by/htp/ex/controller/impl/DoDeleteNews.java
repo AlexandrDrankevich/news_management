@@ -21,9 +21,9 @@ public class DoDeleteNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
+		String[] idNews = request.getParameterValues("id");
 		try {
-			newsService.delete(Integer.parseInt(id));
+			newsService.delete(idNews);
 			response.sendRedirect("controller?command=go_to_news_list");
 		} catch (ServiceException e) {
 			log.error(e);

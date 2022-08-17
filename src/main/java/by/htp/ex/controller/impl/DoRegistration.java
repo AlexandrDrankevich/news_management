@@ -28,10 +28,7 @@ public class DoRegistration implements Command {
 		String login = request.getParameter(RequestParameterName.LOGIN);
 		String password = request.getParameter(RequestParameterName.PASSWORD);
 		String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
-		if (checkData(login, password, name, surname, birthday)) {
-			response.sendRedirect(JspPageName.INDEX_PAGE);
-			return;
-		}
+
 		NewUserInfo user = new NewUserInfo(name, surname, login, password, birthday);
 		try {
 			boolean result = service.registration(user);
@@ -45,9 +42,5 @@ public class DoRegistration implements Command {
 			log.error(e);
 			response.sendRedirect(JspPageName.INDEX_PAGE);
 		}
-	}
-
-	private boolean checkData(String login, String password, String name, String surname, String birthday) {
-		return login == null || password == null || name == null || surname == null || birthday == null ? true : false;
 	}
 }

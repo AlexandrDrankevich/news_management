@@ -14,4 +14,5 @@ public final class RequestParameterName {
     public static final String BRIEF_NEWS = "brief";
     public static final String CONTENT = "content";
     public static final String ID = "id";
+    public static final String DATE = "date";
 }

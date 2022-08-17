@@ -26,10 +26,6 @@ public class DoSIgnIn implements Command {
 		String password;
 		login = request.getParameter(RequestParameterName.LOGIN);
 		password = request.getParameter(RequestParameterName.PASSWORD);
-		if (!checkData(login, password)) {
-			response.sendRedirect(JspPageName.INDEX_PAGE);
-			return;
-		}
 		try {
 			String role = service.signIn(login, password);
 			if (!role.equals("guest")) {
@@ -45,12 +41,5 @@ public class DoSIgnIn implements Command {
 			log.error(e);
 			response.sendRedirect(JspPageName.INDEX_PAGE);
 		}
-	}
-
-	private boolean checkData(String login, String password) {
-		if (login == null || password == null) {
-			return false;
-		}
-		return true;
 	}
 }
