@@ -32,7 +32,7 @@
 			<input type="submit" value="SAVE" />
 		</div>
 	</form>
-</div>
+
 <c:if test="${not (param.editView eq 'active')}">
 	<div class="second-view-button">
 		<a href="controller?command=go_to_news_list"><input type="submit"
