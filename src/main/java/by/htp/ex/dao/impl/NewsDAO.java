@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class NewsDAO implements INewsDAO {
@@ -29,7 +30,7 @@ public class NewsDAO implements INewsDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				result.add(new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"),
-						rs.getString("content"), DateUtil.convertDateToStr(rs.getObject("date",LocalDate.class))));
+						rs.getString("content"), DateUtil.convertDateToStr(rs.getDate("date"))));
 			}
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
@@ -49,7 +50,7 @@ public class NewsDAO implements INewsDAO {
 			ResultSet rs = st.executeQuery(allNews);
 			while (rs.next()) {
 				result.add(new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"),
-						rs.getString("content"), DateUtil.convertDateToStr(rs.getObject("date",LocalDate.class))));
+						rs.getString("content"), DateUtil.convertDateToStr(rs.getDate("date"))));
 			}
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
@@ -69,7 +70,7 @@ public class NewsDAO implements INewsDAO {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			return new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"), rs.getString("content"),
-					DateUtil.convertDateToStr(rs.getObject("date",LocalDate.class)));
+					DateUtil.convertDateToStr(rs.getDate("date")));
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
@@ -87,7 +88,7 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getBriefNews());
 			ps.setString(3, news.getContent());
-			ps.setObject(4, DateUtil.convertStrToDate(news.getNewsDate()));
+			ps.setDate(4, DateUtil.convertStrToDate(news.getNewsDate()));
 			ps.setInt(5, userId);
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
@@ -122,7 +123,7 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getBriefNews());
 			ps.setString(3, news.getContent());
-			ps.setObject(4, DateUtil.convertStrToDate(news.getNewsDate()));
+			ps.setDate(4, DateUtil.convertStrToDate(news.getNewsDate()));
 			ps.setInt(5, userId);
 			ps.setInt(6, news.getIdNews());
 			ps.executeUpdate();

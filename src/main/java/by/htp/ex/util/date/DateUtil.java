@@ -1,8 +1,8 @@
 package by.htp.ex.util.date;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Date;
 
 public final class DateUtil {
@@ -15,15 +15,12 @@ public final class DateUtil {
 		return date;
 	}
 
-	public static LocalDate convertStrToDate(String dateStr) {
-		dateStr="2022-11-01";
-		return LocalDate.parse(dateStr);
+	public static java.sql.Date convertStrToDate(String dateStr) {
+		return java.sql.Date.valueOf(dateStr);
 	}
 
-	public static String convertDateToStr(LocalDate localDate) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		return  localDate.format(formatter);
-		
+	public static String convertDateToStr(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormat.format(date.getTime());
 	}
-
 }

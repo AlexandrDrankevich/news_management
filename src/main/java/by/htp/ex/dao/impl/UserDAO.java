@@ -66,7 +66,7 @@ public class UserDAO implements IUserDAO {
 			ps.setDate(3, DateUtil.getDate());
 			ps.setString(4, user.getName());
 			ps.setString(5, user.getSurname());
-			ps.setObject(6, DateUtil.convertStrToDate(user.getBirthday()));
+			ps.setDate(6, DateUtil.convertStrToDate(user.getBirthday()));
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
