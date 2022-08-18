@@ -5,16 +5,9 @@ import by.htp.ex.dao.DaoException;
 import by.htp.ex.dao.IUserDAO;
 import by.htp.ex.dao.connectionpool.ConnectionPool;
 import by.htp.ex.dao.connectionpool.ConnectionPoolException;
-import by.htp.ex.util.date.Date;
+import by.htp.ex.util.date.DateUtil;
 
 import java.sql.*;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class UserDAO implements IUserDAO {
 	
@@ -70,16 +63,16 @@ public class UserDAO implements IUserDAO {
 			}
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getPassword());
-			ps.setString(3, getDate());
+			ps.setDate(3, DateUtil.getDate());
 			ps.setString(4, user.getName());
 			ps.setString(5, user.getSurname());
-			ps.setString(6, user.getBirthday());
+			ps.setObject(6, DateUtil.convertStrToDate(user.getBirthday()));
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} catch (ConnectionPoolException e) {
 			throw new DaoException(e);
-		}
+		} 
 		return true;
 	}
 
@@ -93,7 +86,4 @@ public class UserDAO implements IUserDAO {
 		}
 	}
 
-	private String getDate() {
-		return Date.getDate();
-	}
 }

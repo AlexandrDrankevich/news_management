@@ -5,12 +5,14 @@ import by.htp.ex.dao.INewsDAO;
 import by.htp.ex.dao.NewsDAOException;
 import by.htp.ex.dao.connectionpool.ConnectionPool;
 import by.htp.ex.dao.connectionpool.ConnectionPoolException;
+import by.htp.ex.util.date.DateUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class NewsDAO implements INewsDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				result.add(new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"),
-						rs.getString("content"), rs.getString("date")));
+						rs.getString("content"), DateUtil.convertDateToStr(rs.getObject("date",LocalDate.class))));
 			}
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
@@ -47,7 +49,7 @@ public class NewsDAO implements INewsDAO {
 			ResultSet rs = st.executeQuery(allNews);
 			while (rs.next()) {
 				result.add(new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"),
-						rs.getString("content"), rs.getString("date")));
+						rs.getString("content"), DateUtil.convertDateToStr(rs.getObject("date",LocalDate.class))));
 			}
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
@@ -67,7 +69,7 @@ public class NewsDAO implements INewsDAO {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			return new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"), rs.getString("content"),
-					rs.getString("date"));
+					DateUtil.convertDateToStr(rs.getObject("date",LocalDate.class)));
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
@@ -85,7 +87,7 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getBriefNews());
 			ps.setString(3, news.getContent());
-			ps.setString(4, news.getNewsDate());
+			ps.setObject(4, DateUtil.convertStrToDate(news.getNewsDate()));
 			ps.setInt(5, userId);
 			ps.executeUpdate();
 			ResultSet rs = ps.getGeneratedKeys();
@@ -96,7 +98,7 @@ public class NewsDAO implements INewsDAO {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
 			throw new NewsDAOException(e);
-		}
+		} 
 	}
 
 	private static final String getrUserId = "SELECT id FROM users WHERE login=?";
@@ -120,16 +122,15 @@ public class NewsDAO implements INewsDAO {
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getBriefNews());
 			ps.setString(3, news.getContent());
-			ps.setString(4, news.getNewsDate());
+			ps.setObject(4, DateUtil.convertStrToDate(news.getNewsDate()));
 			ps.setInt(5, userId);
 			ps.setInt(6, news.getIdNews());
-
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new NewsDAOException(e);
 		} catch (ConnectionPoolException e) {
 			throw new NewsDAOException(e);
-		}
+		} 
 
 	}
 
