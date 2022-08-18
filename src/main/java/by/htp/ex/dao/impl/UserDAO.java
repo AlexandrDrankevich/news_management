@@ -9,21 +9,21 @@ import by.htp.ex.util.date.DateUtil;
 
 import java.sql.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UserDAO implements IUserDAO {
-	
-	private static final String authorizeDataSelection = "SELECT * FROM users WHERE login=? AND password=?";
+
+	private static final String authorizeDataSelection = "SELECT * FROM users WHERE login=?";
 
 	@Override
 	public boolean logination(String login, String password) throws DaoException {
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 				PreparedStatement ps = connection.prepareStatement(authorizeDataSelection)) {
 			ps.setString(1, login);
-			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				return true;
+				return checkPassword(connection, login, password);
 			}
-
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} catch (ConnectionPoolException e) {
@@ -32,18 +32,16 @@ public class UserDAO implements IUserDAO {
 		return false;
 	}
 
-	private static final String userRole = "SELECT roles.title FROM users inner join roles on users.roles_id=roles.id where users.login=? and users.password=?";
+	private static final String userRole = "SELECT roles.title FROM users inner join roles on users.roles_id=roles.id where users.login=? ";
 
-	public String getRole(String login, String password) throws DaoException {
+	public String getRole(String login) throws DaoException {
 		try (Connection connection = ConnectionPool.getInstance().takeConnection();
 				PreparedStatement ps = connection.prepareStatement(userRole)) {
 			ps.setString(1, login);
-			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				return rs.getString("title");
 			}
-
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} catch (ConnectionPoolException e) {
@@ -72,8 +70,25 @@ public class UserDAO implements IUserDAO {
 			throw new DaoException(e);
 		} catch (ConnectionPoolException e) {
 			throw new DaoException(e);
-		} 
+		}
 		return true;
+	}
+
+	private static final String getPassword = "SELECT password FROM users WHERE login=?";
+
+	private boolean checkPassword(Connection connection, String login, String password) throws SQLException {
+		int saltLength = 30;
+		try (PreparedStatement ps = connection.prepareStatement(getPassword)) {
+			ps.setString(1, login);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String hashPasswordDataBase = rs.getString("password");
+			if (hashPasswordDataBase.length() < saltLength) {
+				return false;
+			}
+			String hashPassword = BCrypt.hashpw(password, hashPasswordDataBase.substring(0, saltLength));
+			return hashPassword.equals(hashPassword);
+		}
 	}
 
 	private static final String checkLoginExist = "SELECT login FROM users WHERE login=?";

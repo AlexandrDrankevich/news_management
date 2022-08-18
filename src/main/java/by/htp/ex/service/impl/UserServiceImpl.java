@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     	 }
         try {
             if (userDAO.logination(login, password)) {
-                return userDAO.getRole(login, password);
+                return userDAO.getRole(login);
             } else {
                 return "guest";
             }

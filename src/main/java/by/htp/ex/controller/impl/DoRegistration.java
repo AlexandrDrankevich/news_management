@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class DoRegistration implements Command {
 
@@ -28,8 +29,9 @@ public class DoRegistration implements Command {
 		String login = request.getParameter(RequestParameterName.LOGIN);
 		String password = request.getParameter(RequestParameterName.PASSWORD);
 		String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
+		String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-		NewUserInfo user = new NewUserInfo(name, surname, login, password, birthday);
+		NewUserInfo user = new NewUserInfo(name, surname, login, hashPassword, birthday);
 		try {
 			boolean result = service.registration(user);
 			if (result) {
