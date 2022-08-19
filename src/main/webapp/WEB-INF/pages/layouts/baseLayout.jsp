@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="localization.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.loctitle.name.welcome"
+	var="welcome" />
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,7 +28,7 @@
 			<div class="menu">
 
 				<c:if test="${not (sessionScope.user eq 'active')}">
-				    Welcome!!!!!
+				   ${welcome}
 								</c:if>
 				<c:if test="${sessionScope.user eq 'active'}">
 					<c:import url="/WEB-INF/pages/tiles/menu.jsp" />
