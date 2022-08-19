@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import by.htp.ex.bean.News;
 import by.htp.ex.controller.Command;
 import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
@@ -23,7 +24,7 @@ public class GoToEditNews implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		News news;
 		String id;
-		id = request.getParameter("id");
+		id = request.getParameter(RequestParameterName.ID);
 		try {
 			news = newsService.findById(Integer.parseInt(id));
 			request.setAttribute("news", news);

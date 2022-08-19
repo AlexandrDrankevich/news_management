@@ -1,23 +1,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="localization.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.locbutton.name.ru"
+	var="ru_button" />
+<fmt:message bundle="${loc}" key="local.locbutton.name.en"
+	var="en_button" />
+	<fmt:message bundle="${loc}" key="local.locbutton.name.sign_in"
+	var="sign_in" />
+	<fmt:message bundle="${loc}" key="local.locbutton.name.sign_out"
+	var="sign_out" />
+	<fmt:message bundle="${loc}" key="local.locbutton.name.reg"
+	var="registration" />
+	<fmt:message bundle="${loc}" key="local.loclabel.name.login"
+	var="login" />
+	<fmt:message bundle="${loc}" key="local.loclabel.name.password"
+	var="password" />
+	<fmt:message bundle="${loc}" key="local.loctitle.name.management"
+	var="management" />
 
 <div class="wrapper">
-	<div class="newstitle">News management</div>
+	<div class="newstitle">${management}</div>
 
 
 	<div class="local-link">
 
 		<div align="right">
 
-			<a href=""> en </a> &nbsp;&nbsp; <a href=""> ru </a> <br /> <br />
+			<a href="controller?command=go_to_base_page&local=en">${en_button}</a> &nbsp;&nbsp; <a href="controller?command=go_to_base_page&local=ru">${ru_button}</a> <br /> <br />
 		</div>
 
 		<c:if test="${not (sessionScope.user eq 'active')}">
 
 			<div align="right">
 				<form action="controller" method="post">
-					<input type="hidden" name="command" value="do_sign_in" /> Enter
-					login: <input type="text" name="login" value="" required
-						pattern="[a-z 0-9]+@[a-z]+.[a-z]{2,3}" /><br /> Enter password: <input
+					<input type="hidden" name="command" value="do_sign_in" /> 
+					${login} <input type="text" name="login" value="" required
+						pattern="[a-z 0-9]+@[a-z]+.[a-z]{2,3}" /><br />${password} <input
 						type="password" name="password" value="" required
 						pattern="[A-Z a-z 0-9]+" /><br />
 
@@ -31,8 +51,8 @@
 						<c:out value="${param.message}" />
 					</c:if>
 
-					<a href="controller?command=go_to_registration_page">Registration</a>
-					<input type="submit" value="Sign In" /><br />
+					<a href="controller?command=go_to_registration_page">${registration}</a>
+					<input type="submit" value="${sign_in}" /><br />
 				</form>
 			</div>
 
@@ -43,7 +63,7 @@
 			<div align="right">
 				<form action="controller" method="post">
 					<input type="hidden" name="command" value="do_sign_out" /> <input
-						type="submit" value="Sign Out" /><br />
+						type="submit" value="${sign_out}" /><br />
 						<c:out value="${param.message}" />
 				</form>
 			</div>

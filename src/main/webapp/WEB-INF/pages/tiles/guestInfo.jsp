@@ -1,9 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-guest info
-
+<fmt:setLocale value="${sessionScope.local}" />
+<fmt:setBundle basename="localization.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.loclink.name.news"
+	var="news" />
+<fmt:message bundle="${loc}" key="local.loclink.name.latest_news"
+	var="latest_news" />
+<fmt:message bundle="${loc}" key="local.loctitle.name.no_news"
+	var="no_news" />
 <div class="body-title">
-	<a href="">News >> </a> Latest News
+	<a href="">${news} >> </a>${latest_news}
 </div>
 
 <form action="command.do?method=delete" method="post">
@@ -27,7 +34,7 @@ guest info
 
 	<div class="no-news">
 		<c:if test="${requestScope.news eq null}">
-        No news.
+        ${no_news}
 	</c:if>
 	</div>
 
