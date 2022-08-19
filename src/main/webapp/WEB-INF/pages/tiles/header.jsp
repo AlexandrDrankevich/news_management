@@ -11,7 +11,7 @@
 	var="sign_in" />
 	<fmt:message bundle="${loc}" key="local.locbutton.name.sign_out"
 	var="sign_out" />
-	<fmt:message bundle="${loc}" key="local.locbutton.name.reg"
+	<fmt:message bundle="${loc}" key="local.loclink.name.reg"
 	var="registration" />
 	<fmt:message bundle="${loc}" key="local.loclabel.name.login"
 	var="login" />

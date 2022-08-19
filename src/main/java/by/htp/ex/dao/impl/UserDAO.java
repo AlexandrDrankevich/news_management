@@ -83,11 +83,8 @@ public class UserDAO implements IUserDAO {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			String hashPasswordDataBase = rs.getString("password");
-			if (hashPasswordDataBase.length() < saltLength) {
-				return false;
-			}
 			String hashPassword = BCrypt.hashpw(password, hashPasswordDataBase.substring(0, saltLength));
-			return hashPassword.equals(hashPassword);
+			return hashPasswordDataBase.equals(hashPassword);
 		}
 	}
 
