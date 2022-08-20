@@ -1,33 +1,31 @@
 package by.htp.ex.controller.impl;
 
-import java.io.IOException;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import by.htp.ex.controller.Command;
 import by.htp.ex.controller.JspPageName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 public class DoDeleteNews implements Command {
-	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-	private static final Logger log = LogManager.getLogger(DoDeleteNews.class);
+    private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
+    private static final Logger log = LogManager.getLogger(DoDeleteNews.class);
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] idNews = request.getParameterValues("id");
-		try {
-			newsService.delete(idNews);
-			response.sendRedirect("controller?command=go_to_news_list");
-		} catch (ServiceException e) {
-			log.error(e);
-			response.sendRedirect(JspPageName.ERROR_PAGE);
-		}
-	}
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String[] idNews = request.getParameterValues("id");
+        try {
+            newsService.delete(idNews);
+            response.sendRedirect("controller?command=go_to_news_list");
+        } catch (ServiceException e) {
+            log.error(e);
+            response.sendRedirect(JspPageName.ERROR_PAGE);
+        }
+    }
 }

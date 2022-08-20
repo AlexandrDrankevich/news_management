@@ -35,7 +35,7 @@
 		<br />
 		<div>
 			<label for="login">${login} <font color="red">
-			<c:out	value="${param.massage}">
+			<c:out	value="${param.messageLoginExist}">
 					</c:out> </font>
 			</label> <input type="text" name="login" id="login" class="form-control"
 				value="" required pattern="[a-z 0-9]+@[a-z]+.[a-z]{2,3}" />

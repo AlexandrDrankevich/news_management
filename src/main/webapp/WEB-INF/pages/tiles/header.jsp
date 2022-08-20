@@ -15,7 +15,7 @@
 	var="registration" />
 	<fmt:message bundle="${loc}" key="local.loclabel.name.login"
 	var="login" />
-	<fmt:message bundle="${loc}" key="local.loclabel.name.password"
+	<fmt:message bundle="${loc}" key="local.loclabel.name.password_enter"
 	var="password" />
 	<fmt:message bundle="${loc}" key="local.loctitle.name.management"
 	var="management" />
@@ -28,7 +28,7 @@
 
 		<div align="right">
 
-			<a href="controller?command=go_to_base_page&local=en">${en_button}</a> &nbsp;&nbsp; <a href="controller?command=go_to_base_page&local=ru">${ru_button}</a> <br /> <br />
+			<a href=${sessionScope.url}&local=en>${en_button}</a> &nbsp;&nbsp; <a href=${sessionScope.url}&local=ru>${ru_button}</a> <br /> <br />
 		</div>
 
 		<c:if test="${not (sessionScope.user eq 'active')}">

@@ -10,12 +10,11 @@ import by.htp.ex.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.io.IOException;
 
 public class DoRegistration implements Command {
 
@@ -35,9 +34,11 @@ public class DoRegistration implements Command {
 		try {
 			boolean result = service.registration(user);
 			if (result) {
+				request.getSession(true).setAttribute("url","controller?command=go_to_base_page");
 				response.sendRedirect("controller?command=go_to_base_page&message=Successful registration!");
 			} else {
-				response.sendRedirect("controller?command=go_to_base_page&message=" + request.getParameter("login")
+				request.getSession(true).setAttribute("url", "controller?command=go_to_base_page&reg=reg");
+				response.sendRedirect("controller?command=go_to_base_page&messageLoginExist=" + request.getParameter("login")
 						+ " is already exist&reg=reg");
 			}
 		} catch (ServiceException e) {
