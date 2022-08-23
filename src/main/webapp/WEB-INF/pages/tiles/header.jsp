@@ -23,6 +23,8 @@
              var="reg_success"/>
 <fmt:message bundle="${loc}" key="local.loctitle.name.news_saved"
              var="news_saved"/>
+<fmt:message bundle="${loc}" key="local.loctitle.name.news_delete"
+             var="news_delete"/>
 <fmt:message bundle="${loc}" key="local.loctitle.name.authentication_error"
              var="authentication_error"/>
 
@@ -73,6 +75,10 @@
                         type="submit" value="${sign_out}"/><br/>
                     <c:if test="${not (param.newsMessage eq null)}">
                         <c:out value="${news_saved}"/>
+                    </c:if>
+
+                    <c:if test="${not (param.deleteMessage eq null)}">
+                        <c:out value="${news_delete}"/>
                     </c:if>
                 </form>
             </div>

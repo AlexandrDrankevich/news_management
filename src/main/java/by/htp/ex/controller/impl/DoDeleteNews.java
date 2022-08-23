@@ -22,7 +22,7 @@ public class DoDeleteNews implements Command {
         String[] idNews = request.getParameterValues("id");
         try {
             newsService.delete(idNews);
-            response.sendRedirect("controller?command=go_to_news_list");
+            response.sendRedirect("controller?command=go_to_news_list&deleteMessage=delete ok");
         } catch (ServiceException e) {
             log.error(e);
             response.sendRedirect(JspPageName.ERROR_PAGE);
