@@ -28,7 +28,7 @@ public class DataValidation {
         private Map<String, Boolean> validResults = new HashMap<>();
 
         public Builder checkLogin(String login) {
-            validResults.put("login", Pattern.matches("[a-z 0-9]+@[a-z]+.[a-z]{2,3}", login));
+            validResults.put("login", Pattern.matches("\\w+([\\.-]?\\w+)*@[a-z]+.[a-z]{2,3}", login));
             return (this);
         }
 
@@ -64,7 +64,5 @@ public class DataValidation {
         public DataValidation generateResult() {
             return new DataValidation(this);
         }
-
     }
-
 }
