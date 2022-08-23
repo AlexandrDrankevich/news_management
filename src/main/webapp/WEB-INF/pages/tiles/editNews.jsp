@@ -21,7 +21,7 @@
 	var="content" />
 
 <div class="body-title">
-	<a href="controller?command=go_to_news_list">${news_link} >> </a> ${edit_news}
+	<a href="controller?command=go_to_news_list">${news_link} >> </a>${edit_news}
 </div>
 <br />
 <div align="center">

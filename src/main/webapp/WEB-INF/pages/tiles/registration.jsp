@@ -15,6 +15,8 @@
 	var="birthday" />
 	<fmt:message bundle="${loc}" key="local.loclabel.name.password"
 	var="password" />
+<fmt:message bundle="${loc}" key="local.loclabel.name.exist"
+			 var="exist" />
 	
 <div class="form-header">
 	<h1>${registration}</h1>
@@ -34,9 +36,11 @@
 		</div>
 		<br />
 		<div>
-			<label for="login">${login} <font color="red">
-			<c:out	value="${param.messageLoginExist}">
-					</c:out> </font>
+			<label for="login">${login}
+				<c:if test="${not(param.messageLoginExist eq null)}">
+				<font color="red"> <c:out	value="${param.messageLoginExist} ${exist}"/></font>
+				</c:if>
+
 			</label> <input type="email" name="login" id="login" class="form-control"
 				value="" required />
 		</div>

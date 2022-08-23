@@ -35,11 +35,11 @@ public class DoRegistration implements Command {
 			boolean result = service.registration(user);
 			if (result) {
 				request.getSession(true).setAttribute("url","controller?command=go_to_base_page");
-				response.sendRedirect("controller?command=go_to_base_page&message=Successful registration!");
+				response.sendRedirect("controller?command=go_to_base_page&regMessage=Successful registration!");
 			} else {
 				request.getSession(true).setAttribute("url", "controller?command=go_to_base_page&reg=reg");
 				response.sendRedirect("controller?command=go_to_base_page&messageLoginExist=" + request.getParameter("login")
-						+ " is already exist&reg=reg");
+						+ "&reg=reg");
 			}
 		} catch (ServiceException e) {
 			log.error(e);

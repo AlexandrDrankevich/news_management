@@ -33,7 +33,7 @@ public class DoEditNews implements Command {
         try {
             newsService.update(news, login);
             request.getSession(true).setAttribute("url", "controller?command=go_to_view_news&id=" + id);
-            response.sendRedirect("controller?command=go_to_view_news&id=" + id + "&message=News updated!");
+            response.sendRedirect("controller?command=go_to_view_news&id=" + id + "&newsMessage=News saved!");
 
         } catch (ServiceException e) {
             log.error(e);
