@@ -9,8 +9,6 @@
 	var="welcome" />
 <fmt:message bundle="${loc}" key="local.loctitle.name.management"
 			 var="management" />
-<fmt:message bundle="${loc}" key="local.loclink.name.main_page"
-			 var="main_page" />
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -33,8 +31,7 @@
 				   ${welcome}
 					<br/>
 
-					<%--<a href="controller?command=go_to_base_page&url=null">${main_page}</a>--%>
-								</c:if>
+					 	</c:if>
 				<c:if test="${sessionScope.user eq 'active'}">
 					<c:import url="/WEB-INF/pages/tiles/menu.jsp" />
 				</c:if>
