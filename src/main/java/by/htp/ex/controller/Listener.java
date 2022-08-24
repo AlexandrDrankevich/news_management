@@ -7,8 +7,8 @@ import jakarta.servlet.ServletContextListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Listner implements ServletContextListener {
-    private static final Logger log = LogManager.getLogger(Listner.class);
+public class Listener implements ServletContextListener {
+    private static final Logger log = LogManager.getLogger(Listener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
