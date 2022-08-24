@@ -1,6 +1,6 @@
 package by.htp.ex.controller;
 
-import javax.servlet.*;
+import jakarta.servlet.*;
 
 import java.io.IOException;
 
