@@ -29,6 +29,9 @@ public class GoToBasePage implements Command {
                 latestNews = null;
             }
             request.setAttribute("news", latestNews);
+            if("delete".equals(request.getParameter("regUrl"))){
+            	request.getSession().removeAttribute("url");
+            }
             if (request.getSession().getAttribute("url") == null) {
                 request.getSession(true).setAttribute("url", "controller?command=go_to_base_page");
             }

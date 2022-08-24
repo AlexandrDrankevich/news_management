@@ -17,10 +17,13 @@
 	var="password" />
 <fmt:message bundle="${loc}" key="local.loclabel.name.exist"
 			 var="exist" />
+<fmt:message bundle="${loc}" key="local.loclink.name.news"
+	var="news_link" />
 	
-<div class="form-header">
-	<h1>${registration}</h1>
+<div class="body-title">
+	<a href="controller?command=go_to_base_page&regUrl=delete">${news_link} >> </a> ${registration}
 </div>
+
 <div class="reg-form-body">
 	<form action="controller" method="post">
 		<input type="hidden" name="command" value="do_registration">
