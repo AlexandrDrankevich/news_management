@@ -19,7 +19,7 @@
 		<url-pattern>/controller</url-pattern>
 	</servlet-mapping>
 	<listener>
-	<listener-class>by.htp.ex.controller.Listner</listener-class>
+	<listener-class>by.htp.ex.controller.Listener</listener-class>
 	</listener>
 	
 	<filter>
