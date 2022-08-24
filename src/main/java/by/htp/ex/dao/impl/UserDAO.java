@@ -90,10 +90,10 @@ public class UserDAO implements IUserDAO {
         }
     }
 
-    private static final String checkLoginExist = "SELECT login FROM users WHERE login=?";
+    private static final String getlogin = "SELECT login FROM users WHERE login=?";
 
     private boolean isloginExist(Connection connection, String login) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement(checkLoginExist)) {
+        try (PreparedStatement ps = connection.prepareStatement(getlogin)) {
             ps.setString(1, login);
             ResultSet rs = ps.executeQuery();
             return rs.next();
