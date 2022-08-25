@@ -1,4 +1,4 @@
-package by.htp.ex.controller.constants;
+package by.htp.ex.controller.constant;
 
 public final class RequestParameterName {
     private RequestParameterName() {

@@ -2,8 +2,8 @@ package by.htp.ex.controller.impl;
 
 import by.htp.ex.bean.News;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.constants.PageName;
-import by.htp.ex.controller.constants.RequestParameterName;
+import by.htp.ex.controller.constant.PageName;
+import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
