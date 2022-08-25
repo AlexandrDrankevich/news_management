@@ -1,8 +1,8 @@
 package by.htp.ex.controller.impl;
 
-import by.htp.ex.controller.AttributeName;
+import by.htp.ex.controller.constants.AttributeName;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.PageName;
+import by.htp.ex.controller.constants.PageName;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

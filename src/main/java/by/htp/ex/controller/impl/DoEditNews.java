@@ -1,10 +1,10 @@
 package by.htp.ex.controller.impl;
 
 import by.htp.ex.bean.News;
-import by.htp.ex.controller.AttributeName;
+import by.htp.ex.controller.constants.AttributeName;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.PageName;
-import by.htp.ex.controller.RequestParameterName;
+import by.htp.ex.controller.constants.PageName;
+import by.htp.ex.controller.constants.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;

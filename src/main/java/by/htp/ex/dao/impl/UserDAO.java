@@ -14,12 +14,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO implements IUserDAO {
-	
-	private static final String userRole="guest";
-	private static final String columnNameTitle="title";
-	private static final String columnNamePassword="password";
-	private static final int saltLength = 30;
-	
+
+    private static final String userRole = "guest";
+    private static final String rolesColumnLabelTitle = "title";
+    private static final String usersColumnLabelPassword = "password";
+    private static final int saltLength = 30;
+
     private static final String authorizeDataSelection = "SELECT * FROM users WHERE login=?";
 
     @Override
@@ -47,7 +47,7 @@ public class UserDAO implements IUserDAO {
             ps.setString(1, login);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getString(columnNameTitle);
+                return rs.getString(rolesColumnLabelTitle);
             }
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -84,11 +84,11 @@ public class UserDAO implements IUserDAO {
     private static final String getPassword = "SELECT password FROM users WHERE login=?";
 
     private boolean checkPassword(Connection connection, String login, String password) throws SQLException {
-            try (PreparedStatement ps = connection.prepareStatement(getPassword)) {
+        try (PreparedStatement ps = connection.prepareStatement(getPassword)) {
             ps.setString(1, login);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            String hashPasswordDataBase = rs.getString(columnNamePassword);
+            String hashPasswordDataBase = rs.getString(usersColumnLabelPassword);
             String hashPassword = BCrypt.hashpw(password, hashPasswordDataBase.substring(0, saltLength));
             return hashPasswordDataBase.equals(hashPassword);
         }

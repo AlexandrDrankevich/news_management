@@ -31,11 +31,9 @@
 <div class="wrapper">
     <div class="newstitle">${management}</div>
 
-
     <div class="local-link">
 
         <div align="right">
-
             <a href="controller?command=do_change_local&local=en">${en_button}</a> &nbsp;&nbsp; <a
                 href="controller?command=do_change_local&local=ru">${ru_button}</a> <br/> <br/>
         </div>

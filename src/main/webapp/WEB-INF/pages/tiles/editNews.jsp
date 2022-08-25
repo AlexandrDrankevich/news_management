@@ -35,15 +35,15 @@
         <input type="hidden" name="command" value="do_edit_news"/>
         <input type="hidden" name="id" value="${news.idNews}"/>
         <div>
-            <label for=title>${title}&nbsp</label> <input type="text" name="title"
-                                                          id="title" class="form-addnews" value="${news.title}"
-                                                          maxlength="100" required/>
+            <label for=title>${title}&nbsp</label>
+            <input type="text" name="title" id="title" class="form-addnews" value="${news.title}" maxlength="100"
+                   required/>
         </div>
         <br/>
         <div>
-            <label for=date>${date}&nbsp</label> <input type="date" name="date"
-                                                        id="date" class="form-addnews" value="${news.newsDate}"
-                                                        min="2022-01-01" max="2030-01-01" required/>
+            <label for=date>${date}&nbsp</label>
+            <input type="date" name="date" id="date" class="form-addnews" value="${news.newsDate}"
+                   min="2022-01-01" max="2030-01-01" required/>
         </div>
         <br/>
         <p class="formfield">

@@ -1,10 +1,10 @@
 package by.htp.ex.controller.impl;
 
 import by.htp.ex.bean.News;
-import by.htp.ex.controller.AttributeName;
+import by.htp.ex.controller.constants.AttributeName;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.PageName;
-import by.htp.ex.controller.RequestParameterName;
+import by.htp.ex.controller.constants.PageName;
+import by.htp.ex.controller.constants.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
@@ -24,7 +24,7 @@ public class GoToEditNews implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter(RequestParameterName.ID);
         try {
-        	String statusOfEdit="active";
+            String statusOfEdit = "active";
             News news = newsService.findById(Integer.parseInt(id));
             request.setAttribute(AttributeName.NEWS, news);
             request.setAttribute(AttributeName.EDIT_NEWS, statusOfEdit);

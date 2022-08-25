@@ -1,8 +1,8 @@
 package by.htp.ex.controller.impl;
 
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.PageName;
-import by.htp.ex.controller.RequestParameterName;
+import by.htp.ex.controller.constants.PageName;
+import by.htp.ex.controller.constants.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
@@ -23,7 +23,7 @@ public class DoDeleteNews implements Command {
         String[] idNews = request.getParameterValues(RequestParameterName.ID);
         try {
             newsService.delete(idNews);
-            response.sendRedirect(PageName.NEWS_LIST_PAGE+"&deleteMessage=delete ok");
+            response.sendRedirect(PageName.NEWS_LIST_PAGE + "&deleteMessage=delete ok");
         } catch (ServiceException e) {
             log.error(e);
             response.sendRedirect(PageName.ERROR_PAGE);

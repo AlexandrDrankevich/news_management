@@ -13,6 +13,12 @@ import java.util.List;
 
 public class NewsDAO implements INewsDAO {
 
+    private static final String newsColumnLabelId = "id";
+    private static final String newsColumnLabelTitle = "title";
+    private static final String newsColumnLabelBrief = "brief";
+    private static final String newsColumnLabelContent = "content";
+    private static final String newsColumnLabelDate = "date";
+
     public static final String latestNews = "SELECT * FROM news order by date DESC limit ?";
 
     @Override
@@ -23,8 +29,8 @@ public class NewsDAO implements INewsDAO {
             ps.setInt(1, count);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                result.add(new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"),
-                        rs.getString("content"), DateUtil.convertDateToStr(rs.getDate("date"))));
+                result.add(new News(rs.getInt(newsColumnLabelId), rs.getString(newsColumnLabelTitle), rs.getString(newsColumnLabelBrief),
+                        rs.getString(newsColumnLabelContent), DateUtil.convertDateToStr(rs.getDate(newsColumnLabelDate))));
             }
         } catch (SQLException e) {
             throw new NewsDAOException(e);
@@ -43,8 +49,8 @@ public class NewsDAO implements INewsDAO {
              Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(allNews);
             while (rs.next()) {
-                result.add(new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"),
-                        rs.getString("content"), DateUtil.convertDateToStr(rs.getDate("date"))));
+                result.add(new News(rs.getInt(newsColumnLabelId), rs.getString(newsColumnLabelTitle), rs.getString(newsColumnLabelBrief),
+                        rs.getString(newsColumnLabelContent), DateUtil.convertDateToStr(rs.getDate(newsColumnLabelDate))));
             }
         } catch (SQLException e) {
             throw new NewsDAOException(e);
@@ -63,8 +69,8 @@ public class NewsDAO implements INewsDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            return new News(rs.getInt("id"), rs.getString("title"), rs.getString("brief"), rs.getString("content"),
-                    DateUtil.convertDateToStr(rs.getDate("date")));
+            return new News(rs.getInt(newsColumnLabelId), rs.getString(newsColumnLabelTitle), rs.getString(newsColumnLabelBrief), rs.getString(newsColumnLabelContent),
+                    DateUtil.convertDateToStr(rs.getDate(newsColumnLabelDate)));
         } catch (SQLException e) {
             throw new NewsDAOException(e);
         } catch (ConnectionPoolException e) {
@@ -96,17 +102,6 @@ public class NewsDAO implements INewsDAO {
         }
     }
 
-    private static final String getrUserId = "SELECT id FROM users WHERE login=?";
-
-    private int getUserId(Connection connection, String login) throws SQLException {
-        try (PreparedStatement ps = connection.prepareStatement(getrUserId)) {
-            ps.setString(1, login);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return rs.getInt(1);
-        }
-    }
-
     private static final String updateNews = "UPDATE news SET title=?, brief=?,content=?,date=?,reporter_id=? WHERE id=?";
 
     @Override
@@ -126,7 +121,6 @@ public class NewsDAO implements INewsDAO {
         } catch (ConnectionPoolException e) {
             throw new NewsDAOException(e);
         }
-
     }
 
     public static final String deleteNewsById = "DELETE  FROM news where id=?;";
@@ -143,6 +137,17 @@ public class NewsDAO implements INewsDAO {
             throw new NewsDAOException(e);
         } catch (ConnectionPoolException e) {
             throw new NewsDAOException(e);
+        }
+    }
+
+    private static final String getUserId = "SELECT id FROM users WHERE login=?";
+
+    private int getUserId(Connection connection, String login) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement(getUserId)) {
+            ps.setString(1, login);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
         }
     }
 }

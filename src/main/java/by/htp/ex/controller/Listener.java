@@ -11,12 +11,12 @@ public class Listener implements ServletContextListener {
     private static final Logger log = LogManager.getLogger(Listener.class);
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) throws RuntimeException{
+    public void contextInitialized(ServletContextEvent sce) throws RuntimeException {
         try {
             ConnectionPool.getInstance();
         } catch (ConnectionPoolException e) {
             log.error(e);
-           throw new RuntimeException();
+            throw new RuntimeException();
         }
     }
 

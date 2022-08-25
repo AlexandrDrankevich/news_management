@@ -1,10 +1,10 @@
 package by.htp.ex.util.validation;
 
+import by.htp.ex.bean.NewUserInfo;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import by.htp.ex.bean.NewUserInfo;
 
 public class DataValidation {
 
@@ -26,10 +26,10 @@ public class DataValidation {
 
     public static class Builder {
         private Map<String, Boolean> validResults = new HashMap<>();
-        private static final String loginCheckPattern="\\w+([\\.-]?\\w+)*@[a-z]+.[a-z]{2,3}";
-        private static final String passwordCheckPattern="[A-Z a-z 0-9]+";
-        private static final String nameSurnameCheckPattern="[A-Z a-z]+";
-        private static final String birthdayCheckPattern="[0-9]{4}-[0-9]{2}-[0-9]{2}";
+        private static final String loginCheckPattern = "\\w+([\\.-]?\\w+)*@[a-z]+.[a-z]{2,3}";
+        private static final String passwordCheckPattern = "[A-Z a-z 0-9]+";
+        private static final String nameSurnameCheckPattern = "[A-Z a-z]+";
+        private static final String birthdayCheckPattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}";
 
         public Builder checkLogin(String login) {
             validResults.put("login", Pattern.matches(loginCheckPattern, login));

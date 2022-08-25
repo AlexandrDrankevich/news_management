@@ -23,5 +23,4 @@ public final class ServiceProvider {
     public static ServiceProvider getInstance() {
         return instance;
     }
-
 }

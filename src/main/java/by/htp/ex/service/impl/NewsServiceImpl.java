@@ -62,7 +62,6 @@ public class NewsServiceImpl implements NewsService {
     public void update(News news, String login) throws ServiceException {
         try {
             newsDAO.updateNews(news, login);
-            ;
         } catch (NewsDAOException e) {
             throw new ServiceException(e);
         }
