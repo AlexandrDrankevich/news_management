@@ -39,7 +39,8 @@ public class DoRegistration implements Command {
                 response.sendRedirect(PageName.BASE_PAGE + "&regMessage=Successful registration!");
             } else {
                 request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE_WITH_REG_PARAMETER);
-                response.sendRedirect(PageName.BASE_PAGE_WITH_REG_PARAMETER + "&messageLoginExist=" + request.getParameter(RequestParameterName.LOGIN));
+                response.sendRedirect(PageName.BASE_PAGE_WITH_REG_PARAMETER + "&messageLoginExist="
+                        + request.getParameter(RequestParameterName.LOGIN));
             }
         } catch (ServiceException e) {
             log.error(e);
