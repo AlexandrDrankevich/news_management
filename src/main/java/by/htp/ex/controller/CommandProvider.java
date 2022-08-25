@@ -21,6 +21,7 @@ public class CommandProvider {
         commands.put(CommandName.DO_DELETE_NEWS, new DoDeleteNews());
         commands.put(CommandName.GO_TO_EDIT_NEWS, new GoToEditNews());
         commands.put(CommandName.DO_EDIT_NEWS, new DoEditNews());
+        commands.put(CommandName.DO_CHANGE_LOCAL, new DoChangeLocal());
     }
 
     public Command getCommand(String name) {

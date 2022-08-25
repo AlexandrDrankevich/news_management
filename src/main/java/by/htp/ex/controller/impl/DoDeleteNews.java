@@ -1,7 +1,8 @@
 package by.htp.ex.controller.impl;
 
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.PageName;
+import by.htp.ex.controller.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
@@ -19,13 +20,13 @@ public class DoDeleteNews implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] idNews = request.getParameterValues("id");
+        String[] idNews = request.getParameterValues(RequestParameterName.ID);
         try {
             newsService.delete(idNews);
-            response.sendRedirect("controller?command=go_to_news_list&deleteMessage=delete ok");
+            response.sendRedirect(PageName.NEWS_LIST_PAGE+"&deleteMessage=delete ok");
         } catch (ServiceException e) {
             log.error(e);
-            response.sendRedirect(JspPageName.ERROR_PAGE);
+            response.sendRedirect(PageName.ERROR_PAGE);
         }
     }
 }

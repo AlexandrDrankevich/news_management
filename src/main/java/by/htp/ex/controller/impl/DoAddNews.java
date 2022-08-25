@@ -2,7 +2,7 @@ package by.htp.ex.controller.impl;
 
 import by.htp.ex.bean.News;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.PageName;
 import by.htp.ex.controller.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
@@ -30,11 +30,11 @@ public class DoAddNews implements Command {
         News news = new News(title, briefNews, content, newsDate);
         try {
             newsService.save(news, login);
-            response.sendRedirect("controller?command=go_to_view_news&id=" + news.getIdNews() + "&newsMessage=News saved!");
+            response.sendRedirect(PageName.VIEW_NEWS + news.getIdNews() + "&newsMessage=News saved!");
 
         } catch (ServiceException e) {
             log.error(e);
-            response.sendRedirect(JspPageName.ERROR_PAGE);
+            response.sendRedirect(PageName.ERROR_PAGE);
         }
 
     }

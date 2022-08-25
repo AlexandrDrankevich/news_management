@@ -1,8 +1,9 @@
 package by.htp.ex.controller.impl;
 
 import by.htp.ex.bean.NewUserInfo;
+import by.htp.ex.controller.AttributeName;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.PageName;
 import by.htp.ex.controller.RequestParameterName;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
@@ -34,16 +35,15 @@ public class DoRegistration implements Command {
 		try {
 			boolean result = service.registration(user);
 			if (result) {
-				request.getSession(true).setAttribute("url","controller?command=go_to_base_page");
-				response.sendRedirect("controller?command=go_to_base_page&regMessage=Successful registration!");
+				request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE);
+				response.sendRedirect(PageName.BASE_PAGE+"&regMessage=Successful registration!");
 			} else {
-				request.getSession(true).setAttribute("url", "controller?command=go_to_base_page&reg=reg");
-				response.sendRedirect("controller?command=go_to_base_page&messageLoginExist=" + request.getParameter("login")
-						+ "&reg=reg");
+				request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE_WITH_REG_PARAMETER);
+				response.sendRedirect(PageName.BASE_PAGE_WITH_REG_PARAMETER+"&messageLoginExist=" + request.getParameter(RequestParameterName.LOGIN));
 			}
 		} catch (ServiceException e) {
 			log.error(e);
-			response.sendRedirect(JspPageName.INDEX_PAGE);
+			response.sendRedirect(PageName.INDEX_PAGE);
 		}
 	}
 }

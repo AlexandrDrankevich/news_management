@@ -36,8 +36,8 @@
 
         <div align="right">
 
-            <a href=${sessionScope.url}&local=en>${en_button}</a> &nbsp;&nbsp; <a
-                href=${sessionScope.url}&local=ru>${ru_button}</a> <br/> <br/>
+            <a href="controller?command=do_change_local&local=en">${en_button}</a> &nbsp;&nbsp; <a
+                href="controller?command=do_change_local&local=ru">${ru_button}</a> <br/> <br/>
         </div>
 
         <c:if test="${not (sessionScope.user eq 'active')}">

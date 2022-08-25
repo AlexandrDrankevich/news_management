@@ -1,8 +1,9 @@
 package by.htp.ex.controller.impl;
 
 import by.htp.ex.bean.News;
+import by.htp.ex.controller.AttributeName;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.PageName;
 import by.htp.ex.controller.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
@@ -25,14 +26,15 @@ public class GoToViewNews implements Command {
 
         String id = request.getParameter(RequestParameterName.ID);
         try {
+        	String typeOfPresentation="viewNews";
             News news = newsService.findById(Integer.parseInt(id));
-            request.setAttribute("news", news);
-            request.setAttribute("presentation", "viewNews");
-            request.getSession(true).setAttribute("url", "controller?command=go_to_view_news&id=" + id);
-            request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+            request.setAttribute(AttributeName.NEWS, news);
+            request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation );
+            request.getSession(true).setAttribute(AttributeName.URL, PageName.VIEW_NEWS + id);
+            request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
         } catch (ServiceException e) {
             log.error(e);
-            response.sendRedirect(JspPageName.ERROR_PAGE);
+            response.sendRedirect(PageName.ERROR_PAGE);
         }
     }
 }

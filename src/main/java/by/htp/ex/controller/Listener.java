@@ -11,22 +11,22 @@ public class Listener implements ServletContextListener {
     private static final Logger log = LogManager.getLogger(Listener.class);
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
+    public void contextInitialized(ServletContextEvent sce) throws RuntimeException{
         try {
             ConnectionPool.getInstance();
         } catch (ConnectionPoolException e) {
             log.error(e);
-            e.printStackTrace();
+           throw new RuntimeException();
         }
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
+    public void contextDestroyed(ServletContextEvent sce) throws RuntimeException {
         try {
             ConnectionPool.getInstance().dispose();
         } catch (ConnectionPoolException e) {
             log.error(e);
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 

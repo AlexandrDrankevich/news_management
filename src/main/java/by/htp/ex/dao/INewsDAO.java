@@ -4,7 +4,6 @@ import by.htp.ex.bean.News;
 
 import java.util.List;
 
-
 public interface INewsDAO {
     List<News> getList() throws NewsDAOException;
 

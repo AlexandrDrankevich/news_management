@@ -13,17 +13,21 @@ public class UserServiceImpl implements UserService {
 	private final IUserDAO userDAO = DaoProvider.getInstance().getUserDao();
 
 	private final DataValidation.Builder validBuilder = new DataValidation.Builder();
+	private static final String userRole="guest";
+	private static final String messageInvalideAuthData="invalid authorization data";
+	private static final String  messageInvalideRegData="invalid registration data";
+	
 
 	@Override
 	public String signIn(String login, String password) throws ServiceException {
 		if (!validBuilder.checkLogin(login).checkPassword(password).generateResult().isResult()) {
-			throw new ServiceException("invalid authoriztion data");
+			throw new ServiceException(messageInvalideAuthData);
 		}
 		try {
 			if (userDAO.logination(login, password)) {
 				return userDAO.getRole(login);
 			} else {
-				return "guest";
+				return userRole;
 			}
 		} catch (DaoException e) {
 			throw new ServiceException(e);
@@ -33,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean registration(NewUserInfo user) throws ServiceException {
 		if (!validBuilder.checkRegData(user).generateResult().isResult()) {
-			throw new ServiceException("invalid registration data");
+			throw new ServiceException(messageInvalideRegData);
 		}
 		try {
 			return userDAO.registration(user);

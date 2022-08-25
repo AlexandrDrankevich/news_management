@@ -21,7 +21,7 @@
 	var="news_link" />
 	
 <div class="body-title">
-	<a href="controller?command=go_to_base_page&regUrl=delete">${news_link} >> </a> ${registration}
+	<a href="controller?command=go_to_base_page&regUrl=delete" >${news_link} >> </a> ${registration}
 </div>
 
 <div class="reg-form-body">

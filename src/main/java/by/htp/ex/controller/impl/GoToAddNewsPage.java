@@ -1,7 +1,8 @@
 package by.htp.ex.controller.impl;
 
+import by.htp.ex.controller.AttributeName;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.PageName;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,8 +13,9 @@ public class GoToAddNewsPage implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession(true).setAttribute("url", "controller?command=go_to_add_news_page");
-		request.setAttribute("addnews", "active");
-		request.getRequestDispatcher(JspPageName.BASELAYOUT_PAGE).forward(request, response);
+		String addNewsStatus="active";
+		request.getSession(true).setAttribute(AttributeName.URL, PageName.ADD_NEWS_PAGE);
+		request.setAttribute(AttributeName.ADD_NEWS, addNewsStatus);
+		request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
 	}
 }

@@ -1,7 +1,8 @@
 package by.htp.ex.controller.impl;
 
+import by.htp.ex.controller.AttributeName;
 import by.htp.ex.controller.Command;
-import by.htp.ex.controller.JspPageName;
+import by.htp.ex.controller.PageName;
 import by.htp.ex.controller.RequestParameterName;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
@@ -24,21 +25,24 @@ public class DoSIgnIn implements Command {
 
 		String login = request.getParameter(RequestParameterName.LOGIN);
 		String password = request.getParameter(RequestParameterName.PASSWORD);
+		String userRoleName="guest";
+		String userStatusActive="active";
+		String userStatusNotActive="not active";
 		try {
 			String role = service.signIn(login, password);
-			if (!role.equals("guest")) {
-				request.getSession(true).setAttribute("login", login);
-				request.getSession(true).setAttribute("user", "active");
-				request.getSession(true).setAttribute("role", role);
-				response.sendRedirect("controller?command=go_to_news_list");
+			if (!role.equals(userRoleName)) {
+				request.getSession(true).setAttribute(AttributeName.LOGIN, login);
+				request.getSession(true).setAttribute(AttributeName.USER, userStatusActive);
+				request.getSession(true).setAttribute(AttributeName.USER_ROLE, role);
+				response.sendRedirect(PageName.NEWS_LIST_PAGE);
 			} else {
-				request.getSession(true).setAttribute("user", "not active");
-				request.getSession(true).setAttribute("url", "controller?command=go_to_base_page");
-				response.sendRedirect("controller?command=go_to_base_page&AuthenticationError=wrong login or password");
+				request.getSession(true).setAttribute(AttributeName.USER, userStatusNotActive);
+				request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE);
+				response.sendRedirect(PageName.BASE_PAGE+"&AuthenticationError=wrong login or password");
 			}
 		} catch (ServiceException e) {
 			log.error(e);
-			response.sendRedirect(JspPageName.INDEX_PAGE);
+			response.sendRedirect(PageName.INDEX_PAGE);
 		}
 	}
 }
