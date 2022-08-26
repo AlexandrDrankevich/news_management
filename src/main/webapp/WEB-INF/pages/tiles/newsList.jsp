@@ -15,6 +15,8 @@
              var="delete"/>
 <fmt:message bundle="${loc}" key="local.loctitle.name.no_news"
              var="no_news"/>
+<fmt:message bundle="${loc}" key="local.loctitle.news_on_page"
+             var="news_on_page"/>
 
 <div class="body-title">
     <a href="">${news} >> </a>${news_list}
@@ -38,9 +40,7 @@
                         <c:if test="${sessionScope.role eq 'admin'}">
                             <a href="controller?command=go_to_edit_news&id=${news.idNews}">${edit}&nbsp </a>
                         </c:if>
-
                         <a href="controller?command=go_to_view_news&id=${news.idNews}&editView=active">${view} </a>
-
                         <c:if test="${sessionScope.role eq 'admin'}">
                             <input type="checkbox" name="id" value="${news.idNews }" />
                         </c:if>
@@ -62,13 +62,16 @@
             <input type="submit" value="${delete}"/>
         </div>
     </c:if>
-    <br/>
+    <br/><div align="center">
      <c:if test="${requestScope.PageCount.size()>1}">
      <c:forEach var="pageNumber" items="${requestScope.PageCount}">
-     <a href="controller?command=go_to_news_list&pageNumber=${pageNumber}">${pageNumber}&nbsp </a>
-     </c:forEach>
-        <br/> news on page 
+          <a href="controller?command=go_to_news_list&pageNumber=${pageNumber}">${pageNumber}&nbsp </a>
+        </c:forEach>
+             </c:if>
+               </div>
+      <c:if test="${requestScope.news.size()>4}">
+		<br /> ${news_on_page}
         <a href="controller?command=go_to_news_list&newsCount=5&pageNumber=1">5</a>
-      <a href="controller?command=go_to_news_list&newsCount=10&pageNumber=1">10</a>
-      </c:if>
+		<a href="controller?command=go_to_news_list&newsCount=10&pageNumber=1">10</a>
+	</c:if>
 </form>
