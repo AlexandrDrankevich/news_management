@@ -14,6 +14,7 @@ public class NewsServiceImpl implements NewsService {
 
 	private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	private static List<Integer> pageCount;
+	private static String newsCount = "5";
 
 	@Override
 	public List<News> latestList(int count) throws ServiceException {
@@ -26,10 +27,13 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public List<News> list(Integer pageNumber, String newsCount) throws ServiceException {
+		if (newsCount != null) {
+			NewsServiceImpl.newsCount = newsCount;
+		}
 		try {
 			List<News> allNewsList = newsDAO.getList();
-			pageCount = createPageCountList(allNewsList, newsCount);
-			return getNewsOnPage(allNewsList, pageNumber, newsCount);
+			pageCount = createPageCountList(allNewsList);
+			return getNewsOnPage(allNewsList, pageNumber);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
@@ -71,11 +75,8 @@ public class NewsServiceImpl implements NewsService {
 		}
 	}
 
-	private List<Integer> createPageCountList(List<News> allNewsList, String newsCount) {
-		double numberNews=5.0;
-		if(newsCount!=null) {
-			numberNews=Double.parseDouble(newsCount);
-		}
+	private List<Integer> createPageCountList(List<News> allNewsList) {
+		double numberNews = Double.parseDouble(newsCount);
 		int number = (int) (Math.ceil(allNewsList.size() / numberNews));
 		List<Integer> pageCount = new ArrayList<Integer>();
 		for (int i = 1; i <= number; i++) {
@@ -84,11 +85,8 @@ public class NewsServiceImpl implements NewsService {
 		return pageCount;
 	}
 
-	private List<News> getNewsOnPage(List<News> allNewsList, Integer pageNumber,String newsCount) {
-		int numberNews=5;
-		if(newsCount!=null) {
-			numberNews=Integer.valueOf(newsCount);
-		}
+	private List<News> getNewsOnPage(List<News> allNewsList, Integer pageNumber) {
+		int numberNews = Integer.valueOf(newsCount);
 		List<News> newsListOnPage = new ArrayList<News>();
 		if (allNewsList.isEmpty()) {
 			return null;
@@ -102,7 +100,7 @@ public class NewsServiceImpl implements NewsService {
 			newsListOnPage.add(allNewsList.get(i));
 		}
 		if (newsListOnPage.isEmpty() && pageNumber > 1) {
-			return getNewsOnPage(allNewsList, pageNumber - 1,newsCount);
+			return getNewsOnPage(allNewsList, pageNumber - 1);
 		}
 		return newsListOnPage;
 

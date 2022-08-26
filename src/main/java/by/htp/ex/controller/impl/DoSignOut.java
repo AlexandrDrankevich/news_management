@@ -15,6 +15,7 @@ public class DoSignOut implements Command {
         String userStatusNotActive = "not active";
         request.getSession(true).setAttribute(AttributeName.USER, userStatusNotActive);
         request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE);
+        request.getSession(true).removeAttribute(AttributeName.NEWS_COUNT);
         response.sendRedirect(PageName.INDEX_PAGE);
     }
 }
