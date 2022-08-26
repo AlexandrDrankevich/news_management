@@ -18,23 +18,23 @@ import java.io.IOException;
 
 public class GoToViewNews implements Command {
 
-    private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-    private static final Logger log = LogManager.getLogger(GoToViewNews.class);
+	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
+	private static final Logger log = LogManager.getLogger(GoToViewNews.class);
 
-    @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String id = request.getParameter(RequestParameterName.ID);
-        try {
-            String typeOfPresentation = "viewNews";
-            News news = newsService.findById(Integer.parseInt(id));
-            request.setAttribute(AttributeName.NEWS, news);
-            request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
-            request.getSession(true).setAttribute(AttributeName.URL, PageName.VIEW_NEWS + id);
-            request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
-        } catch (ServiceException e) {
-            log.error(e);
-            response.sendRedirect(PageName.ERROR_PAGE);
-        }
-    }
+		String id = request.getParameter(RequestParameterName.ID);
+		String typeOfPresentation = "viewNews";
+		try {
+			News news = newsService.findById(Integer.parseInt(id));
+			request.setAttribute(AttributeName.NEWS, news);
+			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
+			request.getSession(true).setAttribute(AttributeName.URL, PageName.VIEW_NEWS + id);
+			request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
+		} catch (ServiceException e) {
+			log.error(e);
+			response.sendRedirect(PageName.ERROR_PAGE);
+		}
+	}
 }

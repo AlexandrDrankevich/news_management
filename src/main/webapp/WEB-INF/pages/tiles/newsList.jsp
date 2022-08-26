@@ -16,7 +16,6 @@
 <fmt:message bundle="${loc}" key="local.loctitle.name.no_news"
              var="no_news"/>
 
-
 <div class="body-title">
     <a href="">${news} >> </a>${news_list}
 </div>
@@ -43,7 +42,7 @@
                         <a href="controller?command=go_to_view_news&id=${news.idNews}&editView=active">${view} </a>
 
                         <c:if test="${sessionScope.role eq 'admin'}">
-                            <input type="checkbox" name="id" value="${news.idNews }"/>
+                            <input type="checkbox" name="id" value="${news.idNews }" required/>
                         </c:if>
                     </div>
                 </div>
@@ -63,4 +62,10 @@
             <input type="submit" value="${delete}"/>
         </div>
     </c:if>
+    <br/>
+     <c:if test="${requestScope.PageCount.size()>1}">
+     <c:forEach var="pageNumber" items="${requestScope.PageCount}">
+     <a href="controller?command=go_to_news_list&pageNumber=${pageNumber}">${pageNumber}&nbsp </a>
+     </c:forEach>
+     </c:if>
 </form>
