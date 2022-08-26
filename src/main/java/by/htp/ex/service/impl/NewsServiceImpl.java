@@ -13,8 +13,8 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
 
 	private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
-	private static List<Integer> pageCount;
-	private static String newsCount = "5";
+	private  List<Integer> pageCount;
+	private  String newsCount = "5";
 
 	@Override
 	public List<News> latestList(int count) throws ServiceException {
@@ -28,7 +28,7 @@ public class NewsServiceImpl implements NewsService {
 	@Override
 	public List<News> list(Integer pageNumber, String newsCount) throws ServiceException {
 		if (newsCount != null) {
-			NewsServiceImpl.newsCount = newsCount;
+			this.newsCount = newsCount;
 		}
 		try {
 			List<News> allNewsList = newsDAO.getList();
