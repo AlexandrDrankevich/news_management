@@ -67,5 +67,8 @@
      <c:forEach var="pageNumber" items="${requestScope.PageCount}">
      <a href="controller?command=go_to_news_list&pageNumber=${pageNumber}">${pageNumber}&nbsp </a>
      </c:forEach>
-     </c:if>
+        <br/> news on page 
+        <a href="controller?command=go_to_news_list&newsCount=5&pageNumber=1">5</a>
+      <a href="controller?command=go_to_news_list&newsCount=10&pageNumber=1">10</a>
+      </c:if>
 </form>

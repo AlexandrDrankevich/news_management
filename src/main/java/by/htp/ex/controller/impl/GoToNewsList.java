@@ -4,6 +4,7 @@ import by.htp.ex.bean.News;
 import by.htp.ex.controller.constant.AttributeName;
 import by.htp.ex.controller.Command;
 import by.htp.ex.controller.constant.PageName;
+import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.service.NewsService;
 import by.htp.ex.service.ServiceException;
 import by.htp.ex.service.ServiceProvider;
@@ -26,9 +27,13 @@ public class GoToNewsList implements Command {
 		List<News> newsListOnPage;
 		String typeOfPresentation = "newsList";
 		Integer pageNumber = getPageNumber(request);
+		String newsCount=request.getParameter(RequestParameterName.NEWS_COUNT);
+		if(newsCount!=null) {
+			request.getSession(true).setAttribute(AttributeName.NEWS_COUNT,newsCount);
+		}
 		try {
-			newsListOnPage = newsService.list(pageNumber);
-			request.setAttribute("PageCount", newsService.getPageCount());
+			newsListOnPage = newsService.list(pageNumber,(String)request.getSession(true).getAttribute("newsCount"));
+			request.setAttribute(AttributeName.PAGE_COUNT, newsService.getPageCount());
 			request.setAttribute(AttributeName.NEWS, newsListOnPage);
 			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
 			request.getSession(true).setAttribute(AttributeName.URL, PageName.NEWS_LIST_PAGE);
@@ -40,11 +45,11 @@ public class GoToNewsList implements Command {
 	}
 
 	private Integer getPageNumber(HttpServletRequest request) {
-		String page = request.getParameter("pageNumber");
+		String page = request.getParameter(RequestParameterName.PAGE_NUMBER);
 		if (page != null) {
-			request.getSession(true).setAttribute("pageNumber", Integer.valueOf(page));
+			request.getSession(true).setAttribute(AttributeName.PAGE_NUMBER, Integer.valueOf(page));
 		}
-		Integer pageNumber = (Integer) request.getSession(true).getAttribute("pageNumber");
+		Integer pageNumber = (Integer) request.getSession(true).getAttribute(AttributeName.PAGE_NUMBER);
 		if (pageNumber == null) {
 			pageNumber = 1;
 		}

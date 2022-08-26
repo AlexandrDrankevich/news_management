@@ -25,11 +25,11 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public List<News> list(Integer pageNumber) throws ServiceException {
+	public List<News> list(Integer pageNumber, String newsCount) throws ServiceException {
 		try {
 			List<News> allNewsList = newsDAO.getList();
-			pageCount = createPageCountList(allNewsList);
-			return getNewsOnPage(allNewsList, pageNumber);
+			pageCount = createPageCountList(allNewsList, newsCount);
+			return getNewsOnPage(allNewsList, pageNumber, newsCount);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
@@ -71,8 +71,12 @@ public class NewsServiceImpl implements NewsService {
 		}
 	}
 
-	private List<Integer> createPageCountList(List<News> allNewsList) {
-		int number = (int) (Math.ceil(allNewsList.size() / 5.0));
+	private List<Integer> createPageCountList(List<News> allNewsList, String newsCount) {
+		double numberNews=5.0;
+		if(newsCount!=null) {
+			numberNews=Double.parseDouble(newsCount);
+		}
+		int number = (int) (Math.ceil(allNewsList.size() / numberNews));
 		List<Integer> pageCount = new ArrayList<Integer>();
 		for (int i = 1; i <= number; i++) {
 			pageCount.add(i);
@@ -80,13 +84,17 @@ public class NewsServiceImpl implements NewsService {
 		return pageCount;
 	}
 
-	private List<News> getNewsOnPage(List<News> allNewsList, Integer pageNumber) {
+	private List<News> getNewsOnPage(List<News> allNewsList, Integer pageNumber,String newsCount) {
+		int numberNews=5;
+		if(newsCount!=null) {
+			numberNews=Integer.valueOf(newsCount);
+		}
 		List<News> newsListOnPage = new ArrayList<News>();
 		if (allNewsList.isEmpty()) {
 			return null;
 		}
-		int startNews = pageNumber * 5 - 5;
-		int finishNews = pageNumber * 5;
+		int startNews = pageNumber * numberNews - numberNews;
+		int finishNews = pageNumber * numberNews;
 		if (finishNews > allNewsList.size()) {
 			finishNews = allNewsList.size();
 		}
@@ -94,7 +102,7 @@ public class NewsServiceImpl implements NewsService {
 			newsListOnPage.add(allNewsList.get(i));
 		}
 		if (newsListOnPage.isEmpty() && pageNumber > 1) {
-			return getNewsOnPage(allNewsList, pageNumber - 1);
+			return getNewsOnPage(allNewsList, pageNumber - 1,newsCount);
 		}
 		return newsListOnPage;
 

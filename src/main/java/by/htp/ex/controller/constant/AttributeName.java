@@ -12,4 +12,7 @@ public final class AttributeName {
     public final static String PRESENTATION = "presentation";
     public final static String EDIT_NEWS = "editnews";
     public final static String ADD_NEWS = "addnews";
+    public final static String NEWS_COUNT = "newsCount";
+    public final static String PAGE_COUNT = "PageCount";
+    public final static String PAGE_NUMBER = "pageNumber";
 }

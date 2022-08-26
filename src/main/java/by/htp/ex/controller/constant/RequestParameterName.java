@@ -17,4 +17,6 @@ public final class RequestParameterName {
     public static final String DATE = "date";
     public static final String LOCAL = "local";
     public static final String REGISTRATION_PAGE_URL = "regUrl";
+    public final static String NEWS_COUNT = "newsCount";
+    public final static String PAGE_NUMBER = "pageNumber";
 }

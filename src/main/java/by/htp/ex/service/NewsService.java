@@ -13,7 +13,7 @@ public interface NewsService {
 
 	List<News> latestList(int count) throws ServiceException;
 
-	List<News> list(Integer pageNumber) throws ServiceException;
+	List<News> list(Integer pageNumber, String newsCount) throws ServiceException;
 
 	News findById(int id) throws ServiceException;
 
