@@ -17,8 +17,7 @@ public class DoChangeLocal implements Command {
 
         String local = request.getParameter(RequestParameterName.LOCAL);
         String url = (String) request.getSession(true).getAttribute(AttributeName.URL);
-
-        if (request.getSession().getAttribute(AttributeName.URL) == null) {
+        if (url == null) {
             url = PageName.BASE_PAGE;
         }
         request.getSession(true).setAttribute(RequestParameterName.LOCAL, local);
