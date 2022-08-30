@@ -8,7 +8,7 @@ public final class DateUtil {
     private DateUtil() {
     }
 
-    private static final String dateFormatePattern = "yyyy-MM-dd";
+    private static final String dateFormatPattern = "yyyy-MM-dd";
 
     public static java.sql.Date getDate() {
         Date current = Date.from(Instant.now());
@@ -21,7 +21,7 @@ public final class DateUtil {
     }
 
     public static String convertDateToStr(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatePattern);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
         return dateFormat.format(date.getTime());
     }
 }
