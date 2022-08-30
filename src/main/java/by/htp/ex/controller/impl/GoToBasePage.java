@@ -18,30 +18,27 @@ import java.io.IOException;
 import java.util.List;
 
 public class GoToBasePage implements Command {
-    private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-    private static final Logger log = LogManager.getLogger(GoToBasePage.class);
+	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
+	private static final Logger log = LogManager.getLogger(GoToBasePage.class);
 
-    @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<News> latestNews;
-        int countNews = 5;
-        try {
-            latestNews = newsService.latestList(countNews);
-            if (latestNews.isEmpty()) {
-                latestNews = null;
-            }
-            checkParameter(request);
-            request.setAttribute(AttributeName.NEWS, latestNews);
-            request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
-        } catch (ServiceException e) {
-            log.error(e);
-            response.sendRedirect(PageName.ERROR_PAGE);
-        }
-    }
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<News> latestNews;
+		int countNews = 5;
+		try {
+			latestNews = newsService.latestList(countNews);
+			checkParameter(request);
+			request.setAttribute(AttributeName.NEWS, latestNews);
+			request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
+		} catch (ServiceException e) {
+			log.error(e);
+			response.sendRedirect(PageName.ERROR_PAGE);
+		}
+	}
 
-    private void checkParameter(HttpServletRequest request) {
-        if (request.getParameter(RequestParameterName.REGISTRATION_PAGE_URL) != null) {
-            request.getSession(true).removeAttribute(AttributeName.URL);
-        }
-    }
+	private void checkParameter(HttpServletRequest request) {
+		if (request.getParameter(RequestParameterName.REGISTRATION_PAGE_URL) != null) {
+			request.getSession(true).removeAttribute(AttributeName.URL);
+		}
+	}
 }
