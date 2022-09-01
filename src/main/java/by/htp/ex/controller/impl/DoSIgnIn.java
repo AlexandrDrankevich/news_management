@@ -10,6 +10,8 @@ import by.htp.ex.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,16 +30,17 @@ public class DoSIgnIn implements Command {
         String userRoleName = "guest";
         String userStatusActive = "active";
         String userStatusNotActive = "not active";
+        HttpSession session=request.getSession(true);
         try {
             String role = service.signIn(login, password);
             if (!role.equals(userRoleName)) {
-                request.getSession(true).setAttribute(AttributeName.LOGIN, login);
-                request.getSession(true).setAttribute(AttributeName.USER, userStatusActive);
-                request.getSession(true).setAttribute(AttributeName.USER_ROLE, role);
+            	session.setAttribute(AttributeName.LOGIN, login);
+            	session.setAttribute(AttributeName.USER, userStatusActive);
+            	session.setAttribute(AttributeName.USER_ROLE, role);
                 response.sendRedirect(PageName.NEWS_LIST_PAGE);
             } else {
-                request.getSession(true).setAttribute(AttributeName.USER, userStatusNotActive);
-                request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE);
+            	session.setAttribute(AttributeName.USER, userStatusNotActive);
+            	session.setAttribute(AttributeName.URL, PageName.BASE_PAGE);
                 response.sendRedirect(PageName.BASE_PAGE + "&AuthenticationError=wrong login or password");
             }
         } catch (ServiceException e) {

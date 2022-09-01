@@ -11,6 +11,8 @@ import by.htp.ex.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,13 +24,23 @@ public class GoToEditNews implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter(RequestParameterName.ID);
+    	HttpSession session=request.getSession(false);
+    	String userRoleName = "admin";
+        if(session==null) {
+        	response.sendRedirect(PageName.INDEX_PAGE);
+        	return;
+        }
+        if(!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+        	response.sendRedirect(PageName.INDEX_PAGE);
+        	return;
+        }
+    	String id = request.getParameter(RequestParameterName.ID);
         try {
             String statusOfEdit = "active";
             News news = newsService.findById(Integer.parseInt(id));
             request.setAttribute(AttributeName.NEWS, news);
             request.setAttribute(AttributeName.EDIT_NEWS, statusOfEdit);
-            request.getSession(true).setAttribute(AttributeName.URL, PageName.EDIT_NEWS_PAGE + id);
+            session.setAttribute(AttributeName.URL, PageName.EDIT_NEWS_PAGE + id);
             request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
         } catch (ServiceException e) {
             log.error(e);

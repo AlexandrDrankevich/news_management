@@ -11,6 +11,8 @@ import by.htp.ex.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
@@ -30,15 +32,16 @@ public class DoRegistration implements Command {
         String password = request.getParameter(RequestParameterName.PASSWORD);
         String birthday = request.getParameter(RequestParameterName.BIRTHDAY);
         String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-
+        HttpSession session=request.getSession(true);
+        
         NewUserInfo user = new NewUserInfo(name, surname, login, hashPassword, birthday);
         try {
             boolean result = service.registration(user);
             if (result) {
-                request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE);
+            	session.setAttribute(AttributeName.URL, PageName.BASE_PAGE);
                 response.sendRedirect(PageName.BASE_PAGE + "&regMessage=Successful registration!");
             } else {
-                request.getSession(true).setAttribute(AttributeName.URL, PageName.BASE_PAGE_WITH_REG_PARAMETER);
+            	session.setAttribute(AttributeName.URL, PageName.BASE_PAGE_WITH_REG_PARAMETER);
                 response.sendRedirect(PageName.BASE_PAGE_WITH_REG_PARAMETER + "&messageLoginExist="
                         + request.getParameter(RequestParameterName.LOGIN));
             }

@@ -11,6 +11,8 @@ import by.htp.ex.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,15 +30,16 @@ public class GoToNewsList implements Command {
 		String typeOfPresentation = "newsList";
 		Integer pageNumber = getPageNumber(request);
 		String newsCount=request.getParameter(RequestParameterName.NEWS_COUNT);
+		HttpSession session=request.getSession(true);
 		if(newsCount!=null) {
-			request.getSession(true).setAttribute(AttributeName.NEWS_COUNT,newsCount);
+			session.setAttribute(AttributeName.NEWS_COUNT,newsCount);
 		}
 		try {
 			newsListOnPage = newsService.list(pageNumber,(String)request.getSession(true).getAttribute("newsCount"));
 			request.setAttribute(AttributeName.PAGE_COUNT, newsService.getPageCount());
 			request.setAttribute(AttributeName.NEWS, newsListOnPage);
 			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
-			request.getSession(true).setAttribute(AttributeName.URL, PageName.NEWS_LIST_PAGE);
+			session.setAttribute(AttributeName.URL, PageName.NEWS_LIST_PAGE);
 			request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
 		} catch (ServiceException e) {
 			log.error(e);
@@ -47,7 +50,7 @@ public class GoToNewsList implements Command {
 	private Integer getPageNumber(HttpServletRequest request) {
 		String page = request.getParameter(RequestParameterName.PAGE_NUMBER);
 		if (page != null) {
-			request.getSession(true).setAttribute(AttributeName.PAGE_NUMBER, Integer.valueOf(page));
+			request.getSession().setAttribute(AttributeName.PAGE_NUMBER, Integer.valueOf(page));
 		}
 		Integer pageNumber = (Integer) request.getSession(true).getAttribute(AttributeName.PAGE_NUMBER);
 		if (pageNumber == null) {

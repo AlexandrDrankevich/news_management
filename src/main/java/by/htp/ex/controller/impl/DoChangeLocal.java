@@ -7,6 +7,7 @@ import by.htp.ex.controller.constant.RequestParameterName;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -14,13 +15,13 @@ public class DoChangeLocal implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    	HttpSession session=request.getSession(true);
         String local = request.getParameter(RequestParameterName.LOCAL);
-        String url = (String) request.getSession(true).getAttribute(AttributeName.URL);
+        String url = (String) session.getAttribute(AttributeName.URL);
         if (url == null) {
             url = PageName.BASE_PAGE;
         }
-        request.getSession(true).setAttribute(RequestParameterName.LOCAL, local);
+        session.setAttribute(RequestParameterName.LOCAL, local);
         response.sendRedirect(url);
     }
 }

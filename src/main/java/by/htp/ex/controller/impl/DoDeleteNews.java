@@ -1,6 +1,7 @@
 package by.htp.ex.controller.impl;
 
 import by.htp.ex.controller.Command;
+import by.htp.ex.controller.constant.AttributeName;
 import by.htp.ex.controller.constant.PageName;
 import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.service.NewsService;
@@ -9,6 +10,8 @@ import by.htp.ex.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +23,16 @@ public class DoDeleteNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session=request.getSession(false);
+    	String userRoleName = "admin";
+        if(session==null) {
+        	response.sendRedirect(PageName.INDEX_PAGE);
+        	return;
+        }
+        if(!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+        	response.sendRedirect(PageName.INDEX_PAGE);
+        	return;
+        }
 		String[] idNews = request.getParameterValues(RequestParameterName.ID);
 		try {
 			if (idNews == null) {

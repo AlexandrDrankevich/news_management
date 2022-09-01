@@ -2,6 +2,7 @@ package by.htp.ex.controller.impl;
 
 import by.htp.ex.bean.News;
 import by.htp.ex.controller.Command;
+import by.htp.ex.controller.constant.AttributeName;
 import by.htp.ex.controller.constant.PageName;
 import by.htp.ex.controller.constant.RequestParameterName;
 import by.htp.ex.service.NewsService;
@@ -10,6 +11,8 @@ import by.htp.ex.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,12 +24,22 @@ public class DoAddNews implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String title = request.getParameter(RequestParameterName.TITLE);
+    	HttpSession session=request.getSession(false);
+    	String userRoleName = "admin";
+        if(session==null) {
+        	response.sendRedirect(PageName.INDEX_PAGE);
+        	return;
+        }
+        if(!userRoleName.equals(session.getAttribute(AttributeName.USER_ROLE))) {
+        	response.sendRedirect(PageName.INDEX_PAGE);
+        	return;
+        }
+    	String title = request.getParameter(RequestParameterName.TITLE);
         String briefNews = request.getParameter(RequestParameterName.BRIEF_NEWS);
         String content = request.getParameter(RequestParameterName.CONTENT);
-        String login = (String) request.getSession().getAttribute(RequestParameterName.LOGIN);
+        String login = (String) session.getAttribute(RequestParameterName.LOGIN);
         String newsDate = request.getParameter(RequestParameterName.DATE);
-
+        
         News news = new News(title, briefNews, content, newsDate);
         try {
             newsService.save(news, login);

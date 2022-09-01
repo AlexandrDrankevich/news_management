@@ -11,6 +11,8 @@ import by.htp.ex.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,14 +25,18 @@ public class GoToViewNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.sendRedirect(PageName.INDEX_PAGE);
+			return;
+		}
 		String id = request.getParameter(RequestParameterName.ID);
 		String typeOfPresentation = "viewNews";
 		try {
 			News news = newsService.findById(Integer.parseInt(id));
 			request.setAttribute(AttributeName.NEWS, news);
 			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
-			request.getSession(true).setAttribute(AttributeName.URL, PageName.VIEW_NEWS + id);
+			session.setAttribute(AttributeName.URL, PageName.VIEW_NEWS + id);
 			request.getRequestDispatcher(PageName.BASELAYOUT_PAGE).forward(request, response);
 		} catch (ServiceException e) {
 			log.error(e);
