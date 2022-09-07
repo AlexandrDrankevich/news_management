@@ -35,7 +35,7 @@ public class GoToNewsList implements Command {
 			session.setAttribute(AttributeName.NEWS_COUNT,newsCount);
 		}
 		try {
-			newsListOnPage = newsService.list(pageNumber,(String)request.getSession(true).getAttribute(AttributeName.NEWS_COUNT));
+			newsListOnPage = newsService.list(pageNumber,(String)session.getAttribute(AttributeName.NEWS_COUNT));
 			request.setAttribute(AttributeName.PAGE_COUNT, newsService.getPageCount());
 			request.setAttribute(AttributeName.NEWS, newsListOnPage);
 			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
@@ -52,7 +52,7 @@ public class GoToNewsList implements Command {
 		if (page != null) {
 			request.getSession().setAttribute(AttributeName.PAGE_NUMBER, Integer.valueOf(page));
 		}
-		Integer pageNumber = (Integer) request.getSession(true).getAttribute(AttributeName.PAGE_NUMBER);
+		Integer pageNumber = (Integer) request.getSession().getAttribute(AttributeName.PAGE_NUMBER);
 		if (pageNumber == null) {
 			pageNumber = 1;
 		}
