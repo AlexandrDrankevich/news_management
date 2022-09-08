@@ -14,7 +14,7 @@ public class NewsServiceImpl implements NewsService {
 
 	private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
 	private List<Integer> pageCount;
-	private String newsCount = "5";
+	
 
 	@Override
 	public List<News> latestList(int count) throws ServiceException {
@@ -30,14 +30,15 @@ public class NewsServiceImpl implements NewsService {
 	}
 
 	@Override
-	public List<News> list(Integer pageNumber, String newsCount) throws ServiceException {
-		if (newsCount != null) {
-			this.newsCount = newsCount;
+	public List<News> list(Integer pageNumber, String newsCountOnPage) throws ServiceException {
+		 String newsCount = "5";
+		if (newsCountOnPage != null) {
+			newsCount = newsCountOnPage;
 		}
 		try {
 			List<News> allNewsList = newsDAO.getList();
-			pageCount = createPageCountList(allNewsList);
-			return getNewsOnPage(allNewsList, pageNumber);
+			pageCount = createPageCountList(allNewsList, newsCount);
+			return getNewsOnPage(allNewsList, pageNumber, newsCount);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
@@ -79,7 +80,7 @@ public class NewsServiceImpl implements NewsService {
 		}
 	}
 
-	private List<Integer> createPageCountList(List<News> allNewsList) {
+	private List<Integer> createPageCountList(List<News> allNewsList, String newsCount) {
 		double numberNews = Double.parseDouble(newsCount);
 		int number = (int) (Math.ceil(allNewsList.size() / numberNews));
 		List<Integer> pageCount = new ArrayList<Integer>();
@@ -89,7 +90,7 @@ public class NewsServiceImpl implements NewsService {
 		return pageCount;
 	}
 
-	private List<News> getNewsOnPage(List<News> allNewsList, Integer pageNumber) {
+	private List<News> getNewsOnPage(List<News> allNewsList, Integer pageNumber, String newsCount) {
 		int numberNews = Integer.valueOf(newsCount);
 		List<News> newsListOnPage = new ArrayList<News>();
 		if (allNewsList.isEmpty()) {
@@ -104,7 +105,7 @@ public class NewsServiceImpl implements NewsService {
 			newsListOnPage.add(allNewsList.get(i));
 		}
 		if (newsListOnPage.isEmpty() && pageNumber > 1) {
-			return getNewsOnPage(allNewsList, pageNumber - 1);
+			return getNewsOnPage(allNewsList, pageNumber - 1, newsCount);
 		}
 		return newsListOnPage;
 
