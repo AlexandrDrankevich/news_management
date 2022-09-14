@@ -13,8 +13,6 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
 
 	private final INewsDAO newsDAO = DaoProvider.getInstance().getNewsDAO();
-	private List<Integer> pageCount;
-	
 
 	@Override
 	public List<News> latestList(int count) throws ServiceException {
@@ -31,13 +29,9 @@ public class NewsServiceImpl implements NewsService {
 
 	@Override
 	public List<News> list(Integer pageNumber, String newsCountOnPage) throws ServiceException {
-		 String newsCount = "5";
-		if (newsCountOnPage != null) {
-			newsCount = newsCountOnPage;
-		}
+		String newsCount = checkNewsCount(newsCountOnPage);
 		try {
 			List<News> allNewsList = newsDAO.getList();
-			pageCount = createPageCountList(allNewsList, newsCount);
 			return getNewsOnPage(allNewsList, pageNumber, newsCount);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
@@ -57,6 +51,16 @@ public class NewsServiceImpl implements NewsService {
 	public void save(News news, String login) throws ServiceException {
 		try {
 			newsDAO.addNews(news, login);
+		} catch (NewsDAOException e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	public List<Integer> getPageCount(String newsCountOnPage) throws ServiceException {
+		String newsCount = checkNewsCount(newsCountOnPage);
+		try {
+			return createPageCountList(newsDAO.getList(), newsCount);
 		} catch (NewsDAOException e) {
 			throw new ServiceException(e);
 		}
@@ -111,8 +115,12 @@ public class NewsServiceImpl implements NewsService {
 
 	}
 
-	@Override
-	public List<Integer> getPageCount() {
-		return pageCount;
+	private String checkNewsCount(String newsCountOnPage) {
+		String newsCount = "5";
+		if (newsCountOnPage != null) {
+			newsCount = newsCountOnPage;
+		}
+		return newsCount;
 	}
+
 }

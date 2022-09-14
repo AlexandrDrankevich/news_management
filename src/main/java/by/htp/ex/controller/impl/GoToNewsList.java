@@ -34,9 +34,11 @@ public class GoToNewsList implements Command {
 		if(newsCount!=null) {
 			session.setAttribute(AttributeName.NEWS_COUNT,newsCount);
 		}
+		String sessionNewsCount=(String)session.getAttribute(AttributeName.NEWS_COUNT);
 		try {
-			newsListOnPage = newsService.list(pageNumber,(String)session.getAttribute(AttributeName.NEWS_COUNT));
-			request.setAttribute(AttributeName.PAGE_COUNT, newsService.getPageCount());
+			
+			newsListOnPage = newsService.list(pageNumber,sessionNewsCount);
+			request.setAttribute(AttributeName.PAGE_COUNT, newsService.getPageCount(sessionNewsCount));
 			request.setAttribute(AttributeName.NEWS, newsListOnPage);
 			request.setAttribute(AttributeName.PRESENTATION, typeOfPresentation);
 			session.setAttribute(AttributeName.URL, PageName.NEWS_LIST_PAGE);
