@@ -19,7 +19,7 @@ public class NewsDAO implements INewsDAO {
     private static final String newsColumnLabelContent = "content";
     private static final String newsColumnLabelDate = "date";
 
-    public static final String latestNews = "SELECT * FROM news order by date DESC limit ?";
+    private static final String latestNews = "SELECT * FROM news order by date DESC limit ?";
 
     @Override
     public List<News> getLatestsList(int count) throws NewsDAOException {
@@ -40,7 +40,7 @@ public class NewsDAO implements INewsDAO {
         return result;
     }
 
-    public static final String allNews = "SELECT * FROM news order by date DESC";
+    private static final String allNews = "SELECT * FROM news order by date DESC";
 
     @Override
     public List<News> getList() throws NewsDAOException {
@@ -60,7 +60,7 @@ public class NewsDAO implements INewsDAO {
         return result;
     }
 
-    public static final String newsById = "SELECT * FROM news where id=?";
+    private static final String newsById = "SELECT * FROM news where id=?";
 
     @Override
     public News fetchById(int id) throws NewsDAOException {
@@ -123,7 +123,7 @@ public class NewsDAO implements INewsDAO {
         }
     }
 
-    public static final String deleteNewsById = "DELETE  FROM news where id=?;";
+    private static final String deleteNewsById = "DELETE  FROM news where id=?;";
 
     @Override
     public void deleteNews(String[] idNews) throws NewsDAOException {
